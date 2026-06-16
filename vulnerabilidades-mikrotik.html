@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vulnerabilidades en MikroTik</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800;900&display=swap" rel="stylesheet">
+  <style type="text/tailwindcss">@custom-variant dark (&:where(.dark, .dark *));</style>
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .slide { display:none; } .slide.active { display:flex; }
+    @media print {
+      @page { margin: 0; }
+      .no-print { display:none !important; }
+      html, body { height:auto !important; overflow:visible !important; background:#fff !important; }
+      main { height:auto !important; } .bg-decor { display:none !important; }
+      .slide { display:flex !important; page-break-after:always; height:96vh; padding-top:78px !important; position:relative; }
+      .slide::before {
+        content: "🛡️ VULNERABILIDADES EN MIKROTIK";
+        position:absolute; top:0; left:0; right:0;
+        padding:18px 24px; text-align:center;
+        font-size:17px; font-weight:800; letter-spacing:0.04em; color:#e11d48;
+        background:#ffffff; border-bottom:2px solid #e2e8f0;
+      }
+      .slide h1 { color:#e11d48 !important; -webkit-text-fill-color:#e11d48 !important; background:none !important; }
+    }
+    .slide .font-mono { word-break: break-word; }
+    @media screen and (max-width: 767px) {
+      .slide { justify-content: flex-start !important; padding: 1.25rem !important; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+      .slide h1 { font-size: 2.1rem !important; line-height: 1.15 !important; }
+      .slide h2 { font-size: 1.55rem !important; line-height: 1.25 !important; }
+    }
+  </style>
+  <script>(function(){ if (localStorage.getItem('theme') === 'dark') document.documentElement.classList.add('dark'); })();</script>
+</head>
+<body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-white h-screen overflow-hidden transition-colors duration-300">
+
+  <div class="bg-decor fixed inset-0 overflow-hidden pointer-events-none">
+    <div class="absolute -top-40 -left-40 w-96 h-96 bg-rose-400/20 dark:bg-rose-600/25 rounded-full blur-3xl"></div>
+    <div class="absolute -bottom-40 -right-40 w-96 h-96 bg-red-400/20 dark:bg-red-600/20 rounded-full blur-3xl"></div>
+  </div>
+
+  <div class="no-print relative flex items-center justify-between px-6 py-3 border-b border-slate-200 dark:border-slate-800">
+    <a href="index.html" class="text-slate-500 dark:text-slate-400 hover:text-rose-600 dark:hover:text-white text-sm font-semibold">← Inicio</a>
+    <span class="hidden sm:block text-rose-600 dark:text-rose-400 text-xs md:text-sm font-bold tracking-wider text-center">🛡️ VULNERABILIDADES EN MIKROTIK</span>
+    <div class="flex items-center gap-2">
+      <button onclick="downloadPDF()" class="px-3 py-1.5 rounded-lg bg-rose-500 hover:bg-rose-400 text-white text-sm font-semibold transition">📄 PDF</button>
+      <button onclick="toggleTheme()" class="w-9 h-9 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center justify-center"><span class="theme-icon">🌙</span></button>
+      <span id="counter" class="text-slate-500 dark:text-slate-400 text-sm font-mono w-12 text-right">1/12</span>
+    </div>
+  </div>
+
+  <main class="relative h-[calc(100vh-112px)]">
+
+    <!-- 1 portada -->
+    <section class="slide active h-full flex-col items-center justify-center text-center px-8">
+      <span class="text-rose-600 dark:text-rose-400 font-bold tracking-widest mb-4">SEGURIDAD DE REDES</span>
+      <h1 class="text-5xl md:text-7xl font-black max-w-4xl leading-tight bg-gradient-to-r from-rose-500 to-red-500 dark:from-rose-300 dark:to-red-300 bg-clip-text text-transparent pb-2">Vulnerabilidades en MikroTik</h1>
+      <p class="mt-5 text-lg text-slate-500">RouterOS · Por qué importa conocerlas</p>
+      <p class="mt-6 text-xl md:text-2xl text-slate-600 dark:text-slate-300 max-w-3xl">Los MikroTik son <span class="text-rose-600 dark:text-rose-300 font-semibold">muy usados en todo el mundo</span>, lo que los convierte en un blanco frecuente de ataques. Conocer sus debilidades es el <b>primer paso para protegerse</b>.</p>
+    </section>
+
+    <!-- 2 idea central -->
+    <section class="slide h-full flex-col items-center justify-center px-8 text-center">
+      <h2 class="text-4xl md:text-5xl font-black mb-12">La idea central</h2>
+      <div class="flex flex-col md:flex-row items-center justify-center gap-6 max-w-4xl">
+        <div class="rounded-2xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 px-8 py-6"><p class="text-slate-500 text-sm mb-2">El mito:</p><p class="text-2xl font-bold text-slate-400 dark:text-slate-500 line-through">"Falló el equipo"</p></div>
+        <div class="text-4xl text-rose-500">➜ realidad ➜</div>
+        <div class="rounded-2xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 px-8 py-6"><p class="text-slate-500 text-sm mb-2">La causa real:</p><p class="text-2xl font-bold text-rose-600 dark:text-rose-300">Mala configuración</p></div>
+      </div>
+      <p class="mt-12 text-slate-500 dark:text-slate-400 max-w-2xl">La mayoría de incidentes <b>no son fallos del hardware</b>, sino servicios expuestos, claves débiles y firmware viejo.</p>
+    </section>
+
+    <!-- 3 CVE-2018-14847 -->
+    <section class="slide h-full flex-col items-center justify-center px-8">
+      <h2 class="text-4xl md:text-5xl font-black mb-10 text-center">Caso famoso: Winbox (CVE-2018-14847)</h2>
+      <div class="space-y-4 max-w-3xl w-full">
+        <div class="flex items-start gap-4 rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><span class="flex-shrink-0 w-9 h-9 rounded-full bg-rose-500 text-white font-black flex items-center justify-center">1</span><p class="text-slate-600 dark:text-slate-300">Una falla en <b>Winbox</b> (la herramienta de gestión) afectó a equipos <b>sin actualizar</b>.</p></div>
+        <div class="flex items-start gap-4 rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><span class="flex-shrink-0 w-9 h-9 rounded-full bg-rose-500 text-white font-black flex items-center justify-center">2</span><p class="text-slate-600 dark:text-slate-300">Permitía <b>leer las credenciales</b> de administración del router.</p></div>
+        <div class="flex items-start gap-4 rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><span class="flex-shrink-0 w-9 h-9 rounded-full bg-rose-500 text-white font-black flex items-center justify-center">3</span><p class="text-slate-600 dark:text-slate-300">Fue <b>muy explotada</b> a nivel mundial entre 2018 y los años siguientes.</p></div>
+        <div class="flex items-start gap-4 rounded-xl bg-rose-500/10 border border-rose-400/40 p-5"><span class="flex-shrink-0 w-9 h-9 rounded-full bg-rose-500 text-white font-black flex items-center justify-center">✓</span><p class="text-slate-700 dark:text-slate-200">La lección: <b>actualizar RouterOS</b> cerraba la puerta. Los parchados nunca se vieron afectados.</p></div>
+      </div>
+    </section>
+
+    <!-- 4 botnets y abusos -->
+    <section class="slide h-full flex-col items-center justify-center px-8">
+      <h2 class="text-4xl md:text-5xl font-black mb-10 text-center">Botnets y abusos conocidos</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5 max-w-4xl w-full">
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-6"><div class="text-3xl mb-2">🦠</div><h3 class="font-bold text-rose-600 dark:text-rose-300">VPNFilter</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Malware que infectó routers para espiar y controlar tráfico.</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-6"><div class="text-3xl mb-2">💥</div><h3 class="font-bold text-rose-600 dark:text-rose-300">Meris</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Botnet que generó ataques DDoS récord usando equipos infectados.</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-6"><div class="text-3xl mb-2">⛏️</div><h3 class="font-bold text-rose-600 dark:text-rose-300">Minado de cripto</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Inyección de CoinHive para minar usando a las víctimas.</p></div>
+      </div>
+      <p class="mt-8 text-slate-500 dark:text-slate-400 max-w-2xl text-center">Todos aprovecharon equipos <b>desactualizados o expuestos</b> a internet.</p>
+    </section>
+
+    <!-- 5 vectores comunes -->
+    <section class="slide h-full flex-col items-center justify-center px-8">
+      <h2 class="text-4xl md:text-5xl font-black mb-10 text-center">Vectores de ataque más comunes</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-4xl w-full">
+        <div class="flex items-center gap-4 rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><span class="text-2xl">🕰️</span><p class="text-slate-600 dark:text-slate-300 text-sm"><b>Firmware desactualizado</b> con fallas ya conocidas.</p></div>
+        <div class="flex items-center gap-4 rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><span class="text-2xl">🔑</span><p class="text-slate-600 dark:text-slate-300 text-sm"><b>Contraseñas por defecto o débiles</b> fáciles de adivinar.</p></div>
+        <div class="flex items-center gap-4 rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><span class="text-2xl">🌐</span><p class="text-slate-600 dark:text-slate-300 text-sm"><b>Winbox (8291) o SSH/HTTP expuestos</b> directo a internet.</p></div>
+        <div class="flex items-center gap-4 rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><span class="text-2xl">👤</span><p class="text-slate-600 dark:text-slate-300 text-sm"><b>Usuario <span class="font-mono">admin</span> por defecto</b> sin renombrar ni proteger.</p></div>
+      </div>
+    </section>
+
+    <!-- 6 hardening 1 acceso -->
+    <section class="slide h-full flex-col items-center justify-center px-8">
+      <h2 class="text-4xl md:text-5xl font-black mb-10 text-center">Hardening 1 · Acceso</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-4xl w-full">
+        <div class="flex items-center gap-4 rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><span class="text-2xl">⬆️</span><p class="text-slate-600 dark:text-slate-300 text-sm"><b>Actualizar RouterOS</b> a la última versión estable.</p></div>
+        <div class="flex items-center gap-4 rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><span class="text-2xl">🔐</span><p class="text-slate-600 dark:text-slate-300 text-sm"><b>Contraseñas fuertes</b> y únicas para cada equipo.</p></div>
+        <div class="flex items-center gap-4 rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><span class="text-2xl">🪪</span><p class="text-slate-600 dark:text-slate-300 text-sm"><b>Renombrar o quitar</b> el usuario <span class="font-mono">admin</span> por defecto.</p></div>
+        <div class="flex items-center gap-4 rounded-xl bg-rose-500/10 border border-rose-400/40 p-5"><span class="text-2xl">📍</span><p class="text-slate-700 dark:text-slate-200 text-sm"><b>Restringir la IP de administración</b> con una <span class="font-mono">address-list</span>.</p></div>
+      </div>
+    </section>
+
+    <!-- 7 hardening 2 contenido adicional -->
+    <section class="slide h-full flex-col items-center justify-center px-8">
+      <span class="text-rose-600 dark:text-rose-400 font-bold tracking-widest mb-3 text-center block">CONTENIDO ADICIONAL</span>
+      <h2 class="text-4xl md:text-5xl font-black mb-8 text-center">Hardening 2 · Servicios y red</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-4xl w-full">
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><h3 class="font-bold text-rose-600 dark:text-rose-300 mb-1">🚫 Deshabilitar servicios no usados</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Gestionarlos desde <span class="font-mono">/ip service</span>.</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><h3 class="font-bold text-rose-600 dark:text-rose-300 mb-1">🛡️ No exponer Winbox a la WAN</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Mantenerlo solo en la red interna de gestión.</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><h3 class="font-bold text-rose-600 dark:text-rose-300 mb-1">🔒 Administrar por VPN</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Acceso remoto cifrado en lugar de puertos abiertos.</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><h3 class="font-bold text-rose-600 dark:text-rose-300 mb-1">🧱 Firewall y puertos</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Bloquear accesos no autorizados y cambiar puertos por defecto.</p></div>
+      </div>
+    </section>
+
+    <!-- 8 ronda 1 -->
+    <section class="slide h-full flex-col items-center justify-center px-8">
+      <div class="text-5xl mb-4">🙋</div>
+      <h2 class="text-4xl md:text-5xl font-black mb-8 text-center text-rose-600 dark:text-rose-300">Ronda de preguntas · 1</h2>
+      <div class="space-y-4 max-w-3xl w-full">
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><p class="font-semibold">1. ¿Por qué los MikroTik son un blanco frecuente?</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><p class="font-semibold">2. ¿Cuál fue la falla de Winbox en 2018?</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><p class="font-semibold">3. Nombra una botnet que los usó.</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><p class="font-semibold">4. ¿La mayoría de incidentes son por hardware o por configuración?</p></div>
+      </div>
+    </section>
+
+    <!-- 9 monitoreo y respuesta -->
+    <section class="slide h-full flex-col items-center justify-center px-8">
+      <h2 class="text-4xl md:text-5xl font-black mb-8 text-center">Monitoreo y respuesta</h2>
+      <div class="space-y-4 max-w-3xl w-full">
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><p class="font-semibold text-rose-600 dark:text-rose-300">📋 Revisar los logs</p><p class="text-slate-500 dark:text-slate-400 text-sm mt-1">Detectar accesos raros o intentos de inicio de sesión sospechosos.</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><p class="font-semibold text-rose-600 dark:text-rose-300">💾 Mantener respaldos</p><p class="text-slate-500 dark:text-slate-400 text-sm mt-1">Copias de la configuración para restaurar rápido ante un incidente.</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><p class="font-semibold text-rose-600 dark:text-rose-300">📑 Tener un plan ante incidentes</p><p class="text-slate-500 dark:text-slate-400 text-sm mt-1">Saber qué hacer si el equipo se ve comprometido.</p></div>
+        <div class="rounded-xl bg-rose-500/10 border border-rose-400/40 p-5"><p class="font-semibold text-rose-600 dark:text-rose-300">📡 Usar herramientas de alerta</p><p class="text-slate-500 dark:text-slate-400 text-sm mt-1">The Dude o Zabbix para vigilar el estado y recibir avisos.</p></div>
+      </div>
+    </section>
+
+    <!-- 10 checklist de seguridad -->
+    <section class="slide h-full flex-col items-center justify-center px-8">
+      <h2 class="text-4xl md:text-5xl font-black mb-10 text-center">Checklist de seguridad</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-4xl w-full">
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-6"><h3 class="font-bold text-rose-600 dark:text-rose-300 mb-1">✅ Firmware al día</h3><p class="text-slate-500 dark:text-slate-400 text-sm">RouterOS siempre actualizado a la última versión estable.</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-6"><h3 class="font-bold text-rose-600 dark:text-rose-300 mb-1">✅ Claves fuertes</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Contraseñas largas, únicas y sin valores por defecto.</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-6"><h3 class="font-bold text-rose-600 dark:text-rose-300 mb-1">✅ Firewall de gestión</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Solo IP autorizadas pueden administrar el equipo.</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-6"><h3 class="font-bold text-rose-600 dark:text-rose-300 mb-1">✅ Sin servicios expuestos</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Winbox, SSH y HTTP fuera del alcance de la WAN.</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-6"><h3 class="font-bold text-rose-600 dark:text-rose-300 mb-1">✅ Respaldos</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Configuración respaldada y guardada de forma segura.</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-6"><h3 class="font-bold text-rose-600 dark:text-rose-300 mb-1">✅ Monitoreo</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Logs y alertas activas para detectar anomalías a tiempo.</p></div>
+      </div>
+    </section>
+
+    <!-- 11 ronda 2 -->
+    <section class="slide h-full flex-col items-center justify-center px-8">
+      <div class="text-5xl mb-4">🧠</div>
+      <h2 class="text-4xl md:text-5xl font-black mb-8 text-center text-rose-600 dark:text-rose-300">Ronda de preguntas · 2</h2>
+      <div class="space-y-4 max-w-3xl w-full">
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><p class="font-semibold">5. ¿Cómo proteger Winbox?</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><p class="font-semibold">6. ¿Qué comando gestiona los servicios?</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><p class="font-semibold">7. ¿Por qué administrar por VPN?</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><p class="font-semibold">8. Menciona 2 medidas del checklist.</p></div>
+      </div>
+    </section>
+
+    <!-- 12 resumen -->
+    <section class="slide h-full flex-col items-center justify-center px-8 text-center">
+      <div class="text-5xl mb-4">✅</div>
+      <h2 class="text-4xl md:text-5xl font-black mb-8">Resumen del tema</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-3xl w-full text-left">
+        <div class="rounded-xl bg-rose-500/10 border border-rose-400/30 p-5">Los MikroTik son <b>blanco frecuente</b> por lo extendidos que están.</div>
+        <div class="rounded-xl bg-rose-500/10 border border-rose-400/30 p-5">La mayoría de incidentes nacen de <b>malas configuraciones</b>, no del hardware.</div>
+        <div class="rounded-xl bg-rose-500/10 border border-rose-400/30 p-5">Casos reales: <b>Winbox 2018, VPNFilter, Meris</b> y minado de cripto.</div>
+        <div class="rounded-xl bg-rose-500/10 border border-rose-400/30 p-5">Defensa: <b>actualizar, claves fuertes, firewall, VPN y monitoreo</b>.</div>
+      </div>
+      <p class="mt-8 text-slate-500">Siguiente tema: Fallas en la cabecera de internet 🌡️</p>
+    </section>
+
+  </main>
+
+  <div class="no-print relative flex items-center justify-between px-6 py-3 border-t border-slate-200 dark:border-slate-800">
+    <button onclick="prev()" class="px-5 py-2 rounded-lg bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 font-semibold transition">← Anterior</button>
+    <div id="dots" class="hidden md:flex gap-2"></div>
+    <button onclick="next()" class="px-5 py-2 rounded-lg bg-rose-500 hover:bg-rose-400 text-white font-bold transition">Siguiente →</button>
+  </div>
+
+  <script>
+    const slides = document.querySelectorAll('.slide');
+    let cur = 0;
+    const dots = document.getElementById('dots');
+    slides.forEach((_, i) => { const d=document.createElement('button'); d.onclick=()=>go(i); dots.appendChild(d); });
+    function render(){
+      slides.forEach((s,i)=>s.classList.toggle('active', i===cur));
+      document.getElementById('counter').textContent = `${cur+1}/${slides.length}`;
+      [...dots.children].forEach((d,i)=>d.className=`h-2.5 rounded-full transition ${i===cur?'bg-rose-500 w-6':'bg-slate-300 dark:bg-slate-600 w-2.5'}`);
+    }
+    function go(i){ cur=Math.max(0,Math.min(slides.length-1,i)); render(); }
+    function next(){ go(cur+1); } function prev(){ go(cur-1); }
+    function downloadPDF(){ window.print(); }
+    function toggleTheme(){ const el=document.documentElement; el.classList.toggle('dark'); localStorage.setItem('theme', el.classList.contains('dark')?'dark':'light'); updateThemeUI(); }
+    function updateThemeUI(){ const dark=document.documentElement.classList.contains('dark'); document.querySelectorAll('.theme-icon').forEach(e=>e.textContent=dark?'☀️':'🌙'); }
+    document.addEventListener('keydown',e=>{ if(e.key==='ArrowRight')next(); if(e.key==='ArrowLeft')prev(); });
+    updateThemeUI(); render();
+  </script>
+</body>
+</html>

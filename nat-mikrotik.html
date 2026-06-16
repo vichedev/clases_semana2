@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>¿Es recomendable hacer NAT en MikroTik?</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800;900&display=swap" rel="stylesheet">
+  <style type="text/tailwindcss">@custom-variant dark (&:where(.dark, .dark *));</style>
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .slide { display:none; } .slide.active { display:flex; }
+    @media print {
+      @page { margin: 0; }
+      .no-print { display:none !important; }
+      html, body { height:auto !important; overflow:visible !important; background:#fff !important; }
+      main { height:auto !important; } .bg-decor { display:none !important; }
+      .slide { display:flex !important; page-break-after:always; height:96vh; padding-top:78px !important; position:relative; }
+      .slide::before {
+        content: "🔁 ¿NAT EN MIKROTIK?";
+        position:absolute; top:0; left:0; right:0;
+        padding:18px 24px; text-align:center;
+        font-size:17px; font-weight:800; letter-spacing:0.04em; color:#059669;
+        background:#ffffff; border-bottom:2px solid #e2e8f0;
+      }
+      .slide h1 { color:#059669 !important; -webkit-text-fill-color:#059669 !important; background:none !important; }
+    }
+    .slide .font-mono { word-break: break-word; }
+    @media screen and (max-width: 767px) {
+      .slide { justify-content: flex-start !important; padding: 1.25rem !important; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+      .slide h1 { font-size: 2.1rem !important; line-height: 1.15 !important; }
+      .slide h2 { font-size: 1.55rem !important; line-height: 1.25 !important; }
+    }
+  </style>
+  <script>(function(){ if (localStorage.getItem('theme') === 'dark') document.documentElement.classList.add('dark'); })();</script>
+</head>
+<body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-white h-screen overflow-hidden transition-colors duration-300">
+
+  <div class="bg-decor fixed inset-0 overflow-hidden pointer-events-none">
+    <div class="absolute -top-40 -left-40 w-96 h-96 bg-emerald-400/20 dark:bg-emerald-600/25 rounded-full blur-3xl"></div>
+    <div class="absolute -bottom-40 -right-40 w-96 h-96 bg-teal-400/20 dark:bg-teal-600/20 rounded-full blur-3xl"></div>
+  </div>
+
+  <div class="no-print relative flex items-center justify-between px-6 py-3 border-b border-slate-200 dark:border-slate-800">
+    <a href="index.html" class="text-slate-500 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-white text-sm font-semibold">← Inicio</a>
+    <span class="hidden sm:block text-emerald-600 dark:text-emerald-400 text-xs md:text-sm font-bold tracking-wider text-center">🔁 ¿NAT EN MIKROTIK?</span>
+    <div class="flex items-center gap-2">
+      <button onclick="downloadPDF()" class="px-3 py-1.5 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-white text-sm font-semibold transition">📄 PDF</button>
+      <button onclick="toggleTheme()" class="w-9 h-9 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center justify-center"><span class="theme-icon">🌙</span></button>
+      <span id="counter" class="text-slate-500 dark:text-slate-400 text-sm font-mono w-12 text-right">1/12</span>
+    </div>
+  </div>
+
+  <main class="relative h-[calc(100vh-112px)]">
+
+    <!-- 1 portada -->
+    <section class="slide active h-full flex-col items-center justify-center text-center px-8">
+      <span class="text-emerald-600 dark:text-emerald-400 font-bold tracking-widest mb-4">LA PREGUNTA</span>
+      <h1 class="text-5xl md:text-7xl font-black max-w-4xl leading-tight bg-gradient-to-r from-emerald-500 to-teal-500 dark:from-emerald-300 dark:to-teal-300 bg-clip-text text-transparent pb-2">¿Es recomendable hacer NAT en MikroTik?</h1>
+      <p class="mt-5 text-lg text-slate-500">NAT · Network Address Translation</p>
+      <p class="mt-6 text-xl md:text-2xl text-slate-600 dark:text-slate-300 max-w-3xl">El NAT <span class="text-emerald-600 dark:text-emerald-300 font-semibold">traduce direcciones IP privadas</span> a una dirección IP pública para que la red interna pueda salir a internet.</p>
+    </section>
+
+    <!-- 2 recordatorio -->
+    <section class="slide h-full flex-col items-center justify-center px-8 text-center">
+      <h2 class="text-4xl md:text-5xl font-black mb-12">Recordatorio rápido</h2>
+      <div class="flex flex-col md:flex-row items-center justify-center gap-6 max-w-4xl">
+        <div class="rounded-2xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 px-8 py-6"><p class="text-slate-500 text-sm mb-2">Muchos equipos internos:</p><p class="text-2xl font-bold text-emerald-600 dark:text-emerald-300 font-mono">192.168.1.x</p></div>
+        <div class="text-4xl text-emerald-500">➜ NAT ➜</div>
+        <div class="rounded-2xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 px-8 py-6"><p class="text-slate-500 text-sm mb-2">Salen compartiendo:</p><p class="text-2xl font-bold text-cyan-600 dark:text-cyan-300 font-mono">1 IP pública</p></div>
+      </div>
+      <p class="mt-12 text-slate-500 dark:text-slate-400 max-w-2xl">Así muchos dispositivos comparten una sola IP pública, lo que <b>ahorra direcciones IPv4</b>, que son un recurso escaso.</p>
+    </section>
+
+    <!-- 3 respuesta corta -->
+    <section class="slide h-full flex-col items-center justify-center px-8 text-center">
+      <div class="text-5xl mb-4">✅</div>
+      <h2 class="text-4xl md:text-5xl font-black mb-6">Respuesta corta: <span class="text-emerald-600 dark:text-emerald-300">SÍ</span></h2>
+      <p class="text-xl text-slate-600 dark:text-slate-300 max-w-3xl">Es una práctica <b>común y recomendada</b> usar el MikroTik como <span class="text-emerald-600 dark:text-emerald-300 font-semibold">gateway</span> haciendo NAT.</p>
+      <div class="mt-8 rounded-2xl bg-emerald-500/10 border border-emerald-400/40 px-8 py-6 max-w-2xl">
+        <p class="text-slate-600 dark:text-slate-300">Se logra con una regla <span class="font-mono text-emerald-600 dark:text-emerald-300">srcnat</span> con acción <span class="font-mono text-emerald-600 dark:text-emerald-300">masquerade</span>.</p>
+      </div>
+    </section>
+
+    <!-- 4 ejemplo de regla -->
+    <section class="slide h-full flex-col items-center justify-center px-8 text-center">
+      <h2 class="text-4xl md:text-5xl font-black mb-8">Ejemplo de regla NAT</h2>
+      <p class="text-slate-600 dark:text-slate-300 max-w-2xl mb-8">La regla básica para que toda la red interna salga por la interfaz WAN:</p>
+      <div class="rounded-2xl bg-slate-900 dark:bg-black border border-slate-700 px-6 py-6 max-w-3xl w-full text-left overflow-x-auto">
+        <p class="font-mono text-sm md:text-base text-emerald-400">/ip firewall nat<br>add chain=srcnat out-interface=WAN action=masquerade</p>
+      </div>
+      <p class="mt-8 text-slate-500 dark:text-slate-400 max-w-2xl">Toda conexión que salga por <span class="font-mono">WAN</span> se enmascara con la IP pública del router.</p>
+    </section>
+
+    <!-- 5 masquerade vs src-nat -->
+    <section class="slide h-full flex-col items-center justify-center px-8">
+      <h2 class="text-4xl md:text-5xl font-black mb-10 text-center">masquerade vs src-nat</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl w-full">
+        <div class="rounded-2xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-7">
+          <h3 class="font-bold text-emerald-600 dark:text-emerald-300 mb-2 font-mono">masquerade</h3>
+          <p class="text-slate-500 dark:text-slate-400 text-sm">Ideal para <b>IP dinámica</b> (PPPoE, DHCP). Toma automáticamente la IP de la interfaz. Más <b>simple</b> de configurar.</p>
+        </div>
+        <div class="rounded-2xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-7">
+          <h3 class="font-bold text-emerald-600 dark:text-emerald-300 mb-2 font-mono">src-nat to-addresses</h3>
+          <p class="text-slate-500 dark:text-slate-400 text-sm">Para <b>IP pública fija</b>. Defines la IP de salida manualmente. Ofrece <b>mejor rendimiento</b> al no recalcular la IP en cada conexión.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6 ventajas -->
+    <section class="slide h-full flex-col items-center justify-center px-8">
+      <h2 class="text-4xl md:text-5xl font-black mb-10 text-center">Ventajas de hacer NAT en MikroTik</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-4xl w-full">
+        <div class="flex items-center gap-4 rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><span class="text-2xl">🛡️</span><p class="text-slate-600 dark:text-slate-300 text-sm"><b>Firewall integrado</b> en el mismo equipo.</p></div>
+        <div class="flex items-center gap-4 rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><span class="text-2xl">🎛️</span><p class="text-slate-600 dark:text-slate-300 text-sm"><b>Control y flexibilidad</b> total sobre las reglas.</p></div>
+        <div class="flex items-center gap-4 rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><span class="text-2xl">📦</span><p class="text-slate-600 dark:text-slate-300 text-sm"><b>Todo en un equipo</b>: ruteo, NAT y firewall juntos.</p></div>
+        <div class="flex items-center gap-4 rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><span class="text-2xl">⚙️</span><p class="text-slate-600 dark:text-slate-300 text-sm"><b>Fácil de gestionar</b> con Winbox / WebFig.</p></div>
+        <div class="flex items-center gap-4 rounded-xl bg-emerald-500/10 border border-emerald-400/40 p-5 md:col-span-2"><span class="text-2xl">🔀</span><p class="text-slate-700 dark:text-slate-200 text-sm"><b>Port forwarding (dstnat)</b> para publicar servicios internos hacia internet.</p></div>
+      </div>
+    </section>
+
+    <!-- 7 contenido adicional CGNAT -->
+    <section class="slide h-full flex-col items-center justify-center px-8">
+      <span class="text-emerald-600 dark:text-emerald-400 font-bold tracking-widest mb-3 text-center block">CONTENIDO ADICIONAL</span>
+      <h2 class="text-4xl md:text-5xl font-black mb-8 text-center">A gran escala: CGNAT</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl w-full">
+        <div class="rounded-2xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-7">
+          <h3 class="font-bold text-emerald-600 dark:text-emerald-300 mb-2">🏢 ¿Qué es CGNAT?</h3>
+          <p class="text-slate-500 dark:text-slate-400 text-sm"><b>Carrier-Grade NAT</b>: lo usan los ISP cuando faltan IPv4 para muchos clientes. Comparten una IP pública entre varios usuarios.</p>
+        </div>
+        <div class="rounded-2xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-7">
+          <h3 class="font-bold text-emerald-600 dark:text-emerald-300 mb-2">⚠️ Ojo con la carga</h3>
+          <p class="text-slate-500 dark:text-slate-400 text-sm">El <span class="font-mono">connection-tracking</span> y miles de conexiones simultáneas <b>cargan la CPU</b>. Hay que dimensionar bien el equipo.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8 ronda 1 -->
+    <section class="slide h-full flex-col items-center justify-center px-8">
+      <div class="text-5xl mb-4">🙋</div>
+      <h2 class="text-4xl md:text-5xl font-black mb-8 text-center text-emerald-600 dark:text-emerald-300">Ronda de preguntas · 1</h2>
+      <div class="space-y-4 max-w-3xl w-full">
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><p class="font-semibold">1. ¿Qué hace el NAT?</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><p class="font-semibold">2. ¿Qué acción se usa para el NAT de salida?</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><p class="font-semibold">3. ¿En qué cadena (chain) se configura?</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><p class="font-semibold">4. ¿Qué es CGNAT?</p></div>
+      </div>
+    </section>
+
+    <!-- 9 cuándo no conviene -->
+    <section class="slide h-full flex-col items-center justify-center px-8">
+      <h2 class="text-4xl md:text-5xl font-black mb-8 text-center">¿Cuándo NO conviene en el MikroTik?</h2>
+      <div class="space-y-4 max-w-3xl w-full">
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><p class="font-semibold text-emerald-600 dark:text-emerald-300">🔥 Router ya saturado de CPU</p><p class="text-slate-500 dark:text-slate-400 text-sm mt-1">Si el equipo ya está al límite, agregar NAT puede degradar el rendimiento.</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><p class="font-semibold text-emerald-600 dark:text-emerald-300">📡 A gran escala</p><p class="text-slate-500 dark:text-slate-400 text-sm mt-1">Con muchos clientes se prefiere un equipo de <b>CGNAT / BNG dedicado</b>.</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><p class="font-semibold text-emerald-600 dark:text-emerald-300">🌐 Se entregan IP públicas directas</p><p class="text-slate-500 dark:text-slate-400 text-sm mt-1">Si el cliente recibe una IP pública directa, no hace falta NAT en el router.</p></div>
+      </div>
+    </section>
+
+    <!-- 10 recomendación práctica -->
+    <section class="slide h-full flex-col items-center justify-center px-8 text-center">
+      <h2 class="text-4xl md:text-5xl font-black mb-8">Recomendación práctica</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5 max-w-4xl w-full">
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-6"><div class="text-3xl mb-2">🏠</div><h3 class="font-bold text-emerald-600 dark:text-emerald-300">Hogar</h3><p class="text-slate-500 dark:text-slate-400 text-sm">NAT en MikroTik es ideal.</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-6"><div class="text-3xl mb-2">🏬</div><h3 class="font-bold text-emerald-600 dark:text-emerald-300">PYME y pequeño ISP</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Solución perfecta y económica.</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-6"><div class="text-3xl mb-2">🏗️</div><h3 class="font-bold text-emerald-600 dark:text-emerald-300">Al crecer mucho</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Evaluar CGNAT dedicado y dimensionar la CPU.</p></div>
+      </div>
+      <p class="mt-8 text-slate-500 dark:text-slate-400 max-w-2xl">En resumen: empieza con NAT en MikroTik y escala el equipo conforme crece la red.</p>
+    </section>
+
+    <!-- 11 ronda 2 -->
+    <section class="slide h-full flex-col items-center justify-center px-8">
+      <div class="text-5xl mb-4">🧠</div>
+      <h2 class="text-4xl md:text-5xl font-black mb-8 text-center text-emerald-600 dark:text-emerald-300">Ronda de preguntas · 2</h2>
+      <div class="space-y-4 max-w-3xl w-full">
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><p class="font-semibold">5. ¿Cuál es la diferencia entre masquerade y src-nat?</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><p class="font-semibold">6. ¿Qué recurso consume el NAT con muchas conexiones?</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><p class="font-semibold">7. ¿Para qué sirve el dstnat?</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><p class="font-semibold">8. ¿Cuándo conviene usar CGNAT?</p></div>
+      </div>
+    </section>
+
+    <!-- 12 resumen -->
+    <section class="slide h-full flex-col items-center justify-center px-8 text-center">
+      <div class="text-5xl mb-4">✅</div>
+      <h2 class="text-4xl md:text-5xl font-black mb-8">Resumen del tema</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-3xl w-full text-left">
+        <div class="rounded-xl bg-emerald-500/10 border border-emerald-400/30 p-5">El NAT traduce <b>IPs privadas a una pública</b> para salir a internet.</div>
+        <div class="rounded-xl bg-emerald-500/10 border border-emerald-400/30 p-5">En MikroTik se hace con <b>srcnat + masquerade</b>; es una práctica recomendada.</div>
+        <div class="rounded-xl bg-emerald-500/10 border border-emerald-400/30 p-5">Ideal para <b>hogar, PYME y pequeños ISP</b>; aporta firewall y dstnat.</div>
+        <div class="rounded-xl bg-emerald-500/10 border border-emerald-400/30 p-5">A gran escala, evaluar <b>CGNAT dedicado</b> y cuidar la <b>CPU</b>.</div>
+      </div>
+      <p class="mt-8 text-slate-500">Siguiente tema: ¿Usar solo MikroTik como cabecera? 🏗️</p>
+    </section>
+
+  </main>
+
+  <div class="no-print relative flex items-center justify-between px-6 py-3 border-t border-slate-200 dark:border-slate-800">
+    <button onclick="prev()" class="px-5 py-2 rounded-lg bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 font-semibold transition">← Anterior</button>
+    <div id="dots" class="hidden md:flex gap-2"></div>
+    <button onclick="next()" class="px-5 py-2 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-white font-bold transition">Siguiente →</button>
+  </div>
+
+  <script>
+    const slides = document.querySelectorAll('.slide');
+    let cur = 0;
+    const dots = document.getElementById('dots');
+    slides.forEach((_, i) => { const d=document.createElement('button'); d.onclick=()=>go(i); dots.appendChild(d); });
+    function render(){
+      slides.forEach((s,i)=>s.classList.toggle('active', i===cur));
+      document.getElementById('counter').textContent = `${cur+1}/${slides.length}`;
+      [...dots.children].forEach((d,i)=>d.className=`h-2.5 rounded-full transition ${i===cur?'bg-emerald-500 w-6':'bg-slate-300 dark:bg-slate-600 w-2.5'}`);
+    }
+    function go(i){ cur=Math.max(0,Math.min(slides.length-1,i)); render(); }
+    function next(){ go(cur+1); } function prev(){ go(cur-1); }
+    function downloadPDF(){ window.print(); }
+    function toggleTheme(){ const el=document.documentElement; el.classList.toggle('dark'); localStorage.setItem('theme', el.classList.contains('dark')?'dark':'light'); updateThemeUI(); }
+    function updateThemeUI(){ const dark=document.documentElement.classList.contains('dark'); document.querySelectorAll('.theme-icon').forEach(e=>e.textContent=dark?'☀️':'🌙'); }
+    document.addEventListener('keydown',e=>{ if(e.key==='ArrowRight')next(); if(e.key==='ArrowLeft')prev(); });
+    updateThemeUI(); render();
+  </script>
+</body>
+</html>

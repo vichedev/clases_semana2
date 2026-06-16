@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>¿Es recomendable usar solo MikroTik como cabecera?</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800;900&display=swap" rel="stylesheet">
+  <style type="text/tailwindcss">@custom-variant dark (&:where(.dark, .dark *));</style>
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .slide { display:none; } .slide.active { display:flex; }
+    @media print {
+      @page { margin: 0; }
+      .no-print { display:none !important; }
+      html, body { height:auto !important; overflow:visible !important; background:#fff !important; }
+      main { height:auto !important; } .bg-decor { display:none !important; }
+      .slide { display:flex !important; page-break-after:always; height:96vh; padding-top:78px !important; position:relative; }
+      .slide::before {
+        content: "🏗️ ¿SOLO MIKROTIK COMO CABECERA?";
+        position:absolute; top:0; left:0; right:0;
+        padding:18px 24px; text-align:center;
+        font-size:17px; font-weight:800; letter-spacing:0.04em; color:#d97706;
+        background:#ffffff; border-bottom:2px solid #e2e8f0;
+      }
+      .slide h1 { color:#d97706 !important; -webkit-text-fill-color:#d97706 !important; background:none !important; }
+    }
+    .slide .font-mono { word-break: break-word; }
+    @media screen and (max-width: 767px) {
+      .slide { justify-content: flex-start !important; padding: 1.25rem !important; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+      .slide h1 { font-size: 2.1rem !important; line-height: 1.15 !important; }
+      .slide h2 { font-size: 1.55rem !important; line-height: 1.25 !important; }
+    }
+  </style>
+  <script>(function(){ if (localStorage.getItem('theme') === 'dark') document.documentElement.classList.add('dark'); })();</script>
+</head>
+<body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-white h-screen overflow-hidden transition-colors duration-300">
+
+  <div class="bg-decor fixed inset-0 overflow-hidden pointer-events-none">
+    <div class="absolute -top-40 -left-40 w-96 h-96 bg-amber-400/20 dark:bg-amber-600/25 rounded-full blur-3xl"></div>
+    <div class="absolute -bottom-40 -right-40 w-96 h-96 bg-orange-400/20 dark:bg-orange-600/20 rounded-full blur-3xl"></div>
+  </div>
+
+  <div class="no-print relative flex items-center justify-between px-6 py-3 border-b border-slate-200 dark:border-slate-800">
+    <a href="index.html" class="text-slate-500 dark:text-slate-400 hover:text-amber-600 dark:hover:text-white text-sm font-semibold">← Inicio</a>
+    <span class="hidden sm:block text-amber-600 dark:text-amber-400 text-xs md:text-sm font-bold tracking-wider text-center">🏗️ ¿SOLO MIKROTIK COMO CABECERA?</span>
+    <div class="flex items-center gap-2">
+      <button onclick="downloadPDF()" class="px-3 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-white text-sm font-semibold transition">📄 PDF</button>
+      <button onclick="toggleTheme()" class="w-9 h-9 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center justify-center"><span class="theme-icon">🌙</span></button>
+      <span id="counter" class="text-slate-500 dark:text-slate-400 text-sm font-mono w-12 text-right">1/12</span>
+    </div>
+  </div>
+
+  <main class="relative h-[calc(100vh-112px)]">
+
+    <!-- 1 portada -->
+    <section class="slide active h-full flex-col items-center justify-center text-center px-8">
+      <span class="text-amber-600 dark:text-amber-400 font-bold tracking-widest mb-4">LA PREGUNTA</span>
+      <h1 class="text-5xl md:text-7xl font-black max-w-4xl leading-tight bg-gradient-to-r from-amber-500 to-orange-500 dark:from-amber-300 dark:to-orange-300 bg-clip-text text-transparent pb-2">¿Solo MikroTik como cabecera?</h1>
+      <p class="mt-5 text-lg text-slate-500">Head-end de internet · Punto de borde del ISP</p>
+      <p class="mt-6 text-xl md:text-2xl text-slate-600 dark:text-slate-300 max-w-3xl">¿Puede un <span class="text-amber-600 dark:text-amber-300 font-semibold">solo equipo MikroTik</span> ser toda la cabecera de un ISP y distribuir el internet a todos los clientes?</p>
+    </section>
+
+    <!-- 2 qué es una cabecera -->
+    <section class="slide h-full flex-col items-center justify-center px-8 text-center">
+      <h2 class="text-4xl md:text-5xl font-black mb-8">¿Qué es una cabecera?</h2>
+      <p class="text-slate-600 dark:text-slate-300 max-w-3xl mb-10">Es el <b>punto donde llega el internet del proveedor mayorista</b> (upstream) y desde donde se <b>distribuye a todos los clientes</b>.</p>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-4xl w-full text-left">
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><h3 class="font-bold text-amber-600 dark:text-amber-300 mb-1">🌐 Borde (edge)</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Frontera entre tu red y el internet del mayorista.</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><h3 class="font-bold text-amber-600 dark:text-amber-300 mb-1">🔁 NAT</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Traduce las IPs privadas de los clientes a IP pública.</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><h3 class="font-bold text-amber-600 dark:text-amber-300 mb-1">🔑 Autenticación</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Valida a cada cliente (ej. PPPoE) antes de darle servicio.</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><h3 class="font-bold text-amber-600 dark:text-amber-300 mb-1">🎚️ Control</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Aplica ancho de banda, filtros y políticas de tráfico.</p></div>
+      </div>
+    </section>
+
+    <!-- 3 lo que puede hacer -->
+    <section class="slide h-full flex-col items-center justify-center px-8">
+      <h2 class="text-4xl md:text-5xl font-black mb-10 text-center">Lo que un MikroTik PUEDE hacer ahí</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl w-full">
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><h3 class="font-bold text-amber-600 dark:text-amber-300 mb-1">🔗 BGP / Peering</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Intercambia rutas con el mayorista u otros operadores.</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><h3 class="font-bold text-amber-600 dark:text-amber-300 mb-1">🧭 Routing</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Decide por dónde sale cada paquete de la red.</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><h3 class="font-bold text-amber-600 dark:text-amber-300 mb-1">🛡️ Firewall</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Protege y filtra el tráfico entrante y saliente.</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><h3 class="font-bold text-amber-600 dark:text-amber-300 mb-1">🔁 NAT / CGNAT</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Comparte pocas IPs públicas entre muchos clientes.</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><h3 class="font-bold text-amber-600 dark:text-amber-300 mb-1">👤 Servidor PPPoE</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Autentica y entrega sesión a cada usuario.</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><h3 class="font-bold text-amber-600 dark:text-amber-300 mb-1">🎚️ QoS / Ancho de banda</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Limita y prioriza la velocidad de cada plan.</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5 md:col-span-3"><h3 class="font-bold text-amber-600 dark:text-amber-300 mb-1">📋 DHCP</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Asigna direcciones IP automáticamente a la red.</p></div>
+      </div>
+    </section>
+
+    <!-- 4 respuesta matizada -->
+    <section class="slide h-full flex-col items-center justify-center px-8 text-center">
+      <div class="text-5xl mb-4">✅</div>
+      <h2 class="text-4xl md:text-5xl font-black mb-6">Respuesta: sí, es posible</h2>
+      <p class="text-xl md:text-2xl text-slate-600 dark:text-slate-300 max-w-3xl">Usar <b>solo un MikroTik como cabecera</b> es <span class="text-amber-600 dark:text-amber-300 font-semibold">posible y muy común al inicio</span>.</p>
+      <p class="mt-6 text-lg text-slate-500 dark:text-slate-400 max-w-2xl">Un solo equipo puede con <b>todas las funciones</b> (BGP, NAT, PPPoE, QoS…) siempre que el <b>tráfico sea moderado</b> y el modelo esté bien dimensionado.</p>
+    </section>
+
+    <!-- 5 ventajas -->
+    <section class="slide h-full flex-col items-center justify-center px-8">
+      <h2 class="text-4xl md:text-5xl font-black mb-10 text-center">Ventajas de "solo MikroTik"</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-4xl w-full">
+        <div class="flex items-center gap-4 rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><span class="text-3xl">💲</span><div><h3 class="font-bold text-amber-600 dark:text-amber-300">Menor costo</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Un solo equipo para toda la cabecera.</p></div></div>
+        <div class="flex items-center gap-4 rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><span class="text-3xl">🧩</span><div><h3 class="font-bold text-amber-600 dark:text-amber-300">Gestión unificada</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Toda la configuración en un mismo lugar.</p></div></div>
+        <div class="flex items-center gap-4 rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><span class="text-3xl">⚙️</span><div><h3 class="font-bold text-amber-600 dark:text-amber-300">Simple de operar</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Menos equipos, menos puntos que administrar.</p></div></div>
+        <div class="flex items-center gap-4 rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><span class="text-3xl">🖥️</span><div><h3 class="font-bold text-amber-600 dark:text-amber-300">Una sola interfaz</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Todo se administra desde WinBox.</p></div></div>
+      </div>
+    </section>
+
+    <!-- 6 riesgos -->
+    <section class="slide h-full flex-col items-center justify-center px-8">
+      <h2 class="text-4xl md:text-5xl font-black mb-10 text-center">Riesgos de usar uno solo</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-4xl w-full">
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-6"><h3 class="font-bold text-amber-600 dark:text-amber-300 mb-1">⚠️ Punto único de falla</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Sin redundancia: si cae, cae todo el servicio.</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-6"><h3 class="font-bold text-amber-600 dark:text-amber-300 mb-1">🔥 Límite de CPU / pps</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Con mucho tráfico el procesador se satura.</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-6"><h3 class="font-bold text-amber-600 dark:text-amber-300 mb-1">🧠 Tabla BGP completa</h3><p class="text-slate-500 dark:text-slate-400 text-sm">La full table exige bastante RAM.</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-6"><h3 class="font-bold text-amber-600 dark:text-amber-300 mb-1">🪢 Todo en un equipo</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Cada función depende del mismo hardware.</p></div>
+      </div>
+    </section>
+
+    <!-- 7 contenido adicional: separar funciones -->
+    <section class="slide h-full flex-col items-center justify-center px-8">
+      <span class="text-amber-600 dark:text-amber-400 font-bold tracking-widest mb-3 text-center block">CONTENIDO ADICIONAL</span>
+      <h2 class="text-4xl md:text-5xl font-black mb-8 text-center">Al crecer: separar funciones</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-4xl w-full">
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><h3 class="font-bold text-amber-600 dark:text-amber-300 mb-1">🔗 Router de borde</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Equipo dedicado al BGP y al peering.</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><h3 class="font-bold text-amber-600 dark:text-amber-300 mb-1">👤 BNG / PPPoE</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Equipo que autentica y atiende las sesiones de clientes.</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><h3 class="font-bold text-amber-600 dark:text-amber-300 mb-1">🔁 CGNAT y firewall</h3><p class="text-slate-500 dark:text-slate-400 text-sm">En equipos distintos para repartir la carga.</p></div>
+        <div class="rounded-xl bg-amber-500/10 border border-amber-400/40 p-5"><h3 class="font-bold text-amber-600 dark:text-amber-300 mb-1">🔄 Redundancia con VRRP</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Un equipo de respaldo toma el control si el principal falla.</p></div>
+      </div>
+    </section>
+
+    <!-- 8 ronda 1 -->
+    <section class="slide h-full flex-col items-center justify-center px-8">
+      <div class="text-5xl mb-4">🙋</div>
+      <h2 class="text-4xl md:text-5xl font-black mb-8 text-center text-amber-600 dark:text-amber-300">Ronda de preguntas · 1</h2>
+      <div class="space-y-4 max-w-3xl w-full">
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><p class="font-semibold">1. ¿Qué es una cabecera (head-end)?</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><p class="font-semibold">2. Nombra 3 funciones que hace el MikroTik ahí.</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><p class="font-semibold">3. ¿Cuál es el mayor riesgo de usar uno solo?</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><p class="font-semibold">4. ¿Qué recurso necesita la tabla BGP completa?</p></div>
+      </div>
+    </section>
+
+    <!-- 9 buenas prácticas -->
+    <section class="slide h-full flex-col items-center justify-center px-8">
+      <h2 class="text-4xl md:text-5xl font-black mb-8 text-center">Buenas prácticas si usas uno solo</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-4xl w-full">
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><h3 class="font-bold text-amber-600 dark:text-amber-300 mb-1">💾 Respaldos de configuración</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Backups periódicos para restaurar rápido.</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><h3 class="font-bold text-amber-600 dark:text-amber-300 mb-1">📊 Monitoreo</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Vigila CPU, tráfico y estado del equipo.</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><h3 class="font-bold text-amber-600 dark:text-amber-300 mb-1">⬆️ Firmware actualizado</h3><p class="text-slate-500 dark:text-slate-400 text-sm">RouterOS al día por seguridad y estabilidad.</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><h3 class="font-bold text-amber-600 dark:text-amber-300 mb-1">🔋 UPS</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Energía de respaldo ante cortes de luz.</p></div>
+        <div class="rounded-xl bg-amber-500/10 border border-amber-400/40 p-5 md:col-span-2"><h3 class="font-bold text-amber-600 dark:text-amber-300 mb-1">📐 Dimensionar bien el modelo</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Elegir un equipo con margen de sobra (ej. CCR) según el tráfico.</p></div>
+      </div>
+    </section>
+
+    <!-- 10 recomendación -->
+    <section class="slide h-full flex-col items-center justify-center px-8 text-center">
+      <div class="text-5xl mb-4">🎯</div>
+      <h2 class="text-4xl md:text-5xl font-black mb-6">Recomendación</h2>
+      <p class="text-xl md:text-2xl text-slate-600 dark:text-slate-300 max-w-3xl">Para <b>empezar u operaciones pequeñas</b>, un MikroTik bien dimensionado <span class="text-amber-600 dark:text-amber-300 font-semibold">sirve perfectamente</span>.</p>
+      <p class="mt-6 text-lg text-slate-500 dark:text-slate-400 max-w-2xl">Al <b>escalar</b>, conviene <b>distribuir los roles</b> y <b>agregar redundancia</b> para evitar caídas totales del servicio.</p>
+    </section>
+
+    <!-- 11 ronda 2 -->
+    <section class="slide h-full flex-col items-center justify-center px-8">
+      <div class="text-5xl mb-4">🧠</div>
+      <h2 class="text-4xl md:text-5xl font-black mb-8 text-center text-amber-600 dark:text-amber-300">Ronda de preguntas · 2</h2>
+      <div class="space-y-4 max-w-3xl w-full">
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><p class="font-semibold">5. ¿Qué da la redundancia VRRP?</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><p class="font-semibold">6. ¿Por qué separar funciones al crecer?</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><p class="font-semibold">7. Menciona una buena práctica.</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><p class="font-semibold">8. ¿Qué pasa si el único equipo falla?</p></div>
+      </div>
+    </section>
+
+    <!-- 12 resumen -->
+    <section class="slide h-full flex-col items-center justify-center px-8 text-center">
+      <div class="text-5xl mb-4">✅</div>
+      <h2 class="text-4xl md:text-5xl font-black mb-8">Resumen del tema</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-3xl w-full text-left">
+        <div class="rounded-xl bg-amber-500/10 border border-amber-400/30 p-5">Sí es posible usar <b>solo MikroTik como cabecera</b>, sobre todo al inicio.</div>
+        <div class="rounded-xl bg-amber-500/10 border border-amber-400/30 p-5">Hace de todo: <b>BGP, NAT/CGNAT, PPPoE, QoS, firewall</b>.</div>
+        <div class="rounded-xl bg-amber-500/10 border border-amber-400/30 p-5">El gran riesgo es ser un <b>punto único de falla</b> sin redundancia.</div>
+        <div class="rounded-xl bg-amber-500/10 border border-amber-400/30 p-5">Al crecer: <b>distribuir roles</b> y sumar <b>redundancia (VRRP)</b>.</div>
+      </div>
+      <p class="mt-8 text-slate-500">Siguiente tema: ¿Controlar el ancho de banda en la OLT o en el MikroTik? 📊</p>
+    </section>
+
+  </main>
+
+  <div class="no-print relative flex items-center justify-between px-6 py-3 border-t border-slate-200 dark:border-slate-800">
+    <button onclick="prev()" class="px-5 py-2 rounded-lg bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 font-semibold transition">← Anterior</button>
+    <div id="dots" class="hidden md:flex gap-2"></div>
+    <button onclick="next()" class="px-5 py-2 rounded-lg bg-amber-500 hover:bg-amber-400 text-white font-bold transition">Siguiente →</button>
+  </div>
+
+  <script>
+    const slides = document.querySelectorAll('.slide');
+    let cur = 0;
+    const dots = document.getElementById('dots');
+    slides.forEach((_, i) => { const d=document.createElement('button'); d.onclick=()=>go(i); dots.appendChild(d); });
+    function render(){
+      slides.forEach((s,i)=>s.classList.toggle('active', i===cur));
+      document.getElementById('counter').textContent = `${cur+1}/${slides.length}`;
+      [...dots.children].forEach((d,i)=>d.className=`h-2.5 rounded-full transition ${i===cur?'bg-amber-500 w-6':'bg-slate-300 dark:bg-slate-600 w-2.5'}`);
+    }
+    function go(i){ cur=Math.max(0,Math.min(slides.length-1,i)); render(); }
+    function next(){ go(cur+1); } function prev(){ go(cur-1); }
+    function downloadPDF(){ window.print(); }
+    function toggleTheme(){ const el=document.documentElement; el.classList.toggle('dark'); localStorage.setItem('theme', el.classList.contains('dark')?'dark':'light'); updateThemeUI(); }
+    function updateThemeUI(){ const dark=document.documentElement.classList.contains('dark'); document.querySelectorAll('.theme-icon').forEach(e=>e.textContent=dark?'☀️':'🌙'); }
+    document.addEventListener('keydown',e=>{ if(e.key==='ArrowRight')next(); if(e.key==='ArrowLeft')prev(); });
+    updateThemeUI(); render();
+  </script>
+</body>
+</html>

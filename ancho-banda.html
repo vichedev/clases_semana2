@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>¿Controlar el ancho de banda en la OLT o en el MikroTik?</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800;900&display=swap" rel="stylesheet">
+  <style type="text/tailwindcss">@custom-variant dark (&:where(.dark, .dark *));</style>
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .slide { display:none; } .slide.active { display:flex; }
+    @media print {
+      @page { margin: 0; }
+      .no-print { display:none !important; }
+      html, body { height:auto !important; overflow:visible !important; background:#fff !important; }
+      main { height:auto !important; } .bg-decor { display:none !important; }
+      .slide { display:flex !important; page-break-after:always; height:96vh; padding-top:78px !important; position:relative; }
+      .slide::before {
+        content: "📊 ANCHO DE BANDA: OLT O MIKROTIK";
+        position:absolute; top:0; left:0; right:0;
+        padding:18px 24px; text-align:center;
+        font-size:17px; font-weight:800; letter-spacing:0.04em; color:#c026d3;
+        background:#ffffff; border-bottom:2px solid #e2e8f0;
+      }
+      .slide h1 { color:#c026d3 !important; -webkit-text-fill-color:#c026d3 !important; background:none !important; }
+    }
+    .slide .font-mono { word-break: break-word; }
+    @media screen and (max-width: 767px) {
+      .slide { justify-content: flex-start !important; padding: 1.25rem !important; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+      .slide h1 { font-size: 2.1rem !important; line-height: 1.15 !important; }
+      .slide h2 { font-size: 1.55rem !important; line-height: 1.25 !important; }
+    }
+  </style>
+  <script>(function(){ if (localStorage.getItem('theme') === 'dark') document.documentElement.classList.add('dark'); })();</script>
+</head>
+<body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-white h-screen overflow-hidden transition-colors duration-300">
+
+  <div class="bg-decor fixed inset-0 overflow-hidden pointer-events-none">
+    <div class="absolute -top-40 -left-40 w-96 h-96 bg-fuchsia-400/20 dark:bg-fuchsia-600/25 rounded-full blur-3xl"></div>
+    <div class="absolute -bottom-40 -right-40 w-96 h-96 bg-pink-400/20 dark:bg-pink-600/20 rounded-full blur-3xl"></div>
+  </div>
+
+  <div class="no-print relative flex items-center justify-between px-6 py-3 border-b border-slate-200 dark:border-slate-800">
+    <a href="index.html" class="text-slate-500 dark:text-slate-400 hover:text-fuchsia-600 dark:hover:text-white text-sm font-semibold">← Inicio</a>
+    <span class="hidden sm:block text-fuchsia-600 dark:text-fuchsia-400 text-xs md:text-sm font-bold tracking-wider text-center">📊 ANCHO DE BANDA: OLT O MIKROTIK</span>
+    <div class="flex items-center gap-2">
+      <button onclick="downloadPDF()" class="px-3 py-1.5 rounded-lg bg-fuchsia-500 hover:bg-fuchsia-400 text-white text-sm font-semibold transition">📄 PDF</button>
+      <button onclick="toggleTheme()" class="w-9 h-9 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center justify-center"><span class="theme-icon">🌙</span></button>
+      <span id="counter" class="text-slate-500 dark:text-slate-400 text-sm font-mono w-12 text-right">1/12</span>
+    </div>
+  </div>
+
+  <main class="relative h-[calc(100vh-112px)]">
+
+    <!-- 1 portada -->
+    <section class="slide active h-full flex-col items-center justify-center text-center px-8">
+      <span class="text-fuchsia-600 dark:text-fuchsia-400 font-bold tracking-widest mb-4">LA PREGUNTA</span>
+      <h1 class="text-5xl md:text-7xl font-black max-w-4xl leading-tight bg-gradient-to-r from-fuchsia-500 to-pink-500 dark:from-fuchsia-300 dark:to-pink-300 bg-clip-text text-transparent pb-2">¿Controlar el ancho de banda en la OLT o en el MikroTik?</h1>
+      <p class="mt-5 text-lg text-slate-500">Dónde limitar la velocidad del cliente · Redes de ISP / FTTH</p>
+      <p class="mt-6 text-xl md:text-2xl text-slate-600 dark:text-slate-300 max-w-3xl">Existen <span class="text-fuchsia-600 dark:text-fuchsia-300 font-semibold">dos lugares posibles</span> para limitar la velocidad de un cliente: en la <b>OLT</b> (la fibra) o en el <b>MikroTik</b> (el router). ¿Cuál conviene?</p>
+    </section>
+
+    <!-- 2 qué es cada uno -->
+    <section class="slide h-full flex-col items-center justify-center px-8 text-center">
+      <h2 class="text-4xl md:text-5xl font-black mb-12">¿Qué es cada uno?</h2>
+      <div class="flex flex-col md:flex-row items-stretch justify-center gap-6 max-w-4xl w-full">
+        <div class="flex-1 rounded-2xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 px-8 py-6"><div class="text-4xl mb-3">🔌</div><p class="text-xl font-bold text-fuchsia-600 dark:text-fuchsia-300">OLT</p><p class="text-slate-500 text-sm mb-2">Optical Line Terminal</p><p class="text-slate-600 dark:text-slate-300 text-sm">Equipo de fibra <b>GPON</b> que conecta a las <b>ONU</b> de los clientes. Es la cabecera óptica de la red.</p></div>
+        <div class="flex items-center text-4xl text-fuchsia-500">vs</div>
+        <div class="flex-1 rounded-2xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 px-8 py-6"><div class="text-4xl mb-3">🖥️</div><p class="text-xl font-bold text-fuchsia-600 dark:text-fuchsia-300">MikroTik</p><p class="text-slate-500 text-sm mb-2">Router / BNG</p><p class="text-slate-600 dark:text-slate-300 text-sm">El router que <b>enruta</b> el tráfico y <b>autentica</b> a los clientes (PPPoE, Hotspot, Radius).</p></div>
+      </div>
+      <p class="mt-12 text-slate-500 dark:text-slate-400 max-w-2xl">Ambos pueden imponer límites de velocidad, pero de formas muy distintas.</p>
+    </section>
+
+    <!-- 3 opción A: OLT -->
+    <section class="slide h-full flex-col items-center justify-center px-8">
+      <span class="text-fuchsia-600 dark:text-fuchsia-400 font-bold tracking-widest mb-3 text-center block">OPCIÓN A</span>
+      <h2 class="text-4xl md:text-5xl font-black mb-8 text-center">Limitar en la OLT</h2>
+      <p class="text-slate-600 dark:text-slate-300 max-w-2xl text-center mb-8 mx-auto">Se aplican <b>perfiles de velocidad por ONU/puerto</b> directamente en la cabecera de fibra.</p>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-4xl w-full">
+        <div class="rounded-xl bg-fuchsia-500/10 border border-fuchsia-400/40 p-6"><h3 class="font-bold text-fuchsia-600 dark:text-fuchsia-300 mb-2">✅ Pros</h3><ul class="text-slate-600 dark:text-slate-300 text-sm space-y-1 list-disc list-inside"><li>Control físico cerca del cliente.</li><li>Libera CPU del router.</li><li>El límite viaja sobre la propia fibra.</li></ul></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-6"><h3 class="font-bold text-fuchsia-600 dark:text-fuchsia-300 mb-2">⚠️ Contras</h3><ul class="text-slate-600 dark:text-slate-300 text-sm space-y-1 list-disc list-inside"><li>Menos granular en políticas.</li><li>Depende del fabricante de la OLT.</li><li>Menos flexible para horarios o burst.</li></ul></div>
+      </div>
+    </section>
+
+    <!-- 4 opción B: MikroTik -->
+    <section class="slide h-full flex-col items-center justify-center px-8">
+      <span class="text-fuchsia-600 dark:text-fuchsia-400 font-bold tracking-widest mb-3 text-center block">OPCIÓN B</span>
+      <h2 class="text-4xl md:text-5xl font-black mb-8 text-center">Limitar en el MikroTik</h2>
+      <p class="text-slate-600 dark:text-slate-300 max-w-2xl text-center mb-8 mx-auto">Con <span class="font-mono">Simple Queues</span>, <span class="font-mono">Queue Tree</span>, <span class="font-mono">PCQ</span> o el <b>rate-limit</b> del PPPoE/Hotspot.</p>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-4xl w-full">
+        <div class="rounded-xl bg-fuchsia-500/10 border border-fuchsia-400/40 p-6"><h3 class="font-bold text-fuchsia-600 dark:text-fuchsia-300 mb-2">✅ Pros</h3><ul class="text-slate-600 dark:text-slate-300 text-sm space-y-1 list-disc list-inside"><li>Muy flexible: burst, horarios.</li><li>Límites por usuario individual.</li><li>Integra con Radius y planes.</li></ul></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-6"><h3 class="font-bold text-fuchsia-600 dark:text-fuchsia-300 mb-2">⚠️ Contras</h3><ul class="text-slate-600 dark:text-slate-300 text-sm space-y-1 list-disc list-inside"><li>Consume CPU del router.</li><li>Muchas colas exigen hardware potente.</li><li>El cuello de botella es el router.</li></ul></div>
+      </div>
+    </section>
+
+    <!-- 5 PCQ -->
+    <section class="slide h-full flex-col items-center justify-center px-8 text-center">
+      <h2 class="text-4xl md:text-5xl font-black mb-6">PCQ — reparto equitativo</h2>
+      <p class="text-slate-600 dark:text-slate-300 max-w-2xl mb-8 mx-auto"><b>PCQ</b> (Per Connection Queue) reparte <b>equitativamente</b> el ancho de banda entre muchos usuarios. Ideal cuando hay muchas conexiones compartiendo un mismo enlace.</p>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5 max-w-4xl w-full">
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-6"><div class="text-3xl mb-2">⚖️</div><h3 class="font-bold text-fuchsia-600 dark:text-fuchsia-300">Equitativo</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Nadie acapara todo el enlace.</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-6"><div class="text-3xl mb-2">👥</div><h3 class="font-bold text-fuchsia-600 dark:text-fuchsia-300">Muchos usuarios</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Se adapta dinámicamente a la cantidad activa.</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-6"><div class="text-3xl mb-2">📥</div><h3 class="font-bold text-fuchsia-600 dark:text-fuchsia-300">En colas</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Se usa dentro de Queue Tree o Simple Queue.</p></div>
+      </div>
+    </section>
+
+    <!-- 6 rate-limit -->
+    <section class="slide h-full flex-col items-center justify-center px-8 text-center">
+      <h2 class="text-4xl md:text-5xl font-black mb-6">rate-limit por usuario</h2>
+      <p class="text-slate-600 dark:text-slate-300 max-w-2xl mb-8 mx-auto">En <b>PPPoE/Radius</b> se asigna una velocidad por <b>perfil de cliente</b>. Es la forma más usada en los ISP.</p>
+      <div class="rounded-2xl bg-slate-900 dark:bg-black border border-slate-700 px-10 py-8 mb-6">
+        <p class="text-slate-400 text-sm mb-2">Rate Limit (rx/tx) del perfil PPPoE:</p>
+        <p class="font-mono text-3xl md:text-4xl font-black text-fuchsia-400">10M/10M</p>
+      </div>
+      <p class="text-slate-500 dark:text-slate-400 max-w-2xl mx-auto">Cada plan tiene su valor: <span class="font-mono">5M/5M</span>, <span class="font-mono">20M/20M</span>, <span class="font-mono">50M/50M</span>… ligado al usuario que se conecta.</p>
+    </section>
+
+    <!-- 7 contenido adicional: doble límite -->
+    <section class="slide h-full flex-col items-center justify-center px-8">
+      <span class="text-fuchsia-600 dark:text-fuchsia-400 font-bold tracking-widest mb-3 text-center block">CONTENIDO ADICIONAL</span>
+      <h2 class="text-4xl md:text-5xl font-black mb-8 text-center">Evitar el doble límite</h2>
+      <div class="space-y-4 max-w-3xl w-full">
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><p class="font-semibold text-fuchsia-600 dark:text-fuchsia-300">❌ El problema</p><p class="text-slate-500 dark:text-slate-400 text-sm mt-1">Si limitas en <b>ambos lados</b> (OLT y MikroTik) con valores distintos, generas <b>conflictos</b> y resultados raros.</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><p class="font-semibold text-fuchsia-600 dark:text-fuchsia-300">🐛 Síntomas típicos</p><p class="text-slate-500 dark:text-slate-400 text-sm mt-1">Velocidades por debajo de lo contratado, picos inestables o clientes que "no alcanzan" su plan.</p></div>
+        <div class="rounded-xl bg-fuchsia-500/10 border border-fuchsia-400/40 p-5"><p class="font-semibold text-fuchsia-600 dark:text-fuchsia-300">✅ La regla</p><p class="text-slate-700 dark:text-slate-200 text-sm mt-1">Define <b>UN punto principal de control</b>. El otro lado, si limita, debe ir igual o más holgado.</p></div>
+      </div>
+    </section>
+
+    <!-- 8 ronda 1 -->
+    <section class="slide h-full flex-col items-center justify-center px-8">
+      <div class="text-5xl mb-4">🙋</div>
+      <h2 class="text-4xl md:text-5xl font-black mb-8 text-center text-fuchsia-600 dark:text-fuchsia-300">Ronda de preguntas · 1</h2>
+      <div class="space-y-4 max-w-3xl w-full">
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><p class="font-semibold">1. ¿Qué es una OLT?</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><p class="font-semibold">2. ¿Qué es una ONU?</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><p class="font-semibold">3. Nombra una forma de limitar en MikroTik.</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><p class="font-semibold">4. ¿Qué hace PCQ?</p></div>
+      </div>
+    </section>
+
+    <!-- 9 recomendación práctica -->
+    <section class="slide h-full flex-col items-center justify-center px-8">
+      <h2 class="text-4xl md:text-5xl font-black mb-8 text-center">Recomendación práctica</h2>
+      <div class="space-y-4 max-w-3xl w-full">
+        <div class="rounded-xl bg-fuchsia-500/10 border border-fuchsia-400/40 p-5"><p class="font-semibold text-fuchsia-600 dark:text-fuchsia-300">🖥️ Control por plan/cliente → MikroTik</p><p class="text-slate-600 dark:text-slate-300 text-sm mt-1">El BNG vía <b>rate-limit por PPPoE/Radius</b> es el punto ideal por su <b>flexibilidad</b>.</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><p class="font-semibold text-fuchsia-600 dark:text-fuchsia-300">🔌 Límites base o agregados → OLT</p><p class="text-slate-500 dark:text-slate-400 text-sm mt-1">La OLT sirve para <b>límites base</b> o <b>agregados por puerto</b>, no para el detalle por cliente.</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><p class="font-semibold text-fuchsia-600 dark:text-fuchsia-300">🎯 Un solo punto de detalle</p><p class="text-slate-500 dark:text-slate-400 text-sm mt-1">El límite exacto del plan vive en un único lugar: el router.</p></div>
+      </div>
+    </section>
+
+    <!-- 10 dimensionar -->
+    <section class="slide h-full flex-col items-center justify-center px-8">
+      <h2 class="text-4xl md:text-5xl font-black mb-8 text-center">Dimensionar y balancear</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-4xl w-full">
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-6"><h3 class="font-bold text-fuchsia-600 dark:text-fuchsia-300 mb-1">📈 Router cargado</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Si la CPU del router está alta, <b>descarga parte del límite a la OLT</b>.</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-6"><h3 class="font-bold text-fuchsia-600 dark:text-fuchsia-300 mb-1">⚖️ Balancear</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Reparte la carga según la <b>CPU</b> y la <b>cantidad de clientes</b>.</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-6"><h3 class="font-bold text-fuchsia-600 dark:text-fuchsia-300 mb-1">🧮 Medir antes</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Observa el uso de CPU con muchas colas activas antes de decidir.</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-6"><h3 class="font-bold text-fuchsia-600 dark:text-fuchsia-300 mb-1">📊 Crecer con orden</h3><p class="text-slate-500 dark:text-slate-400 text-sm">A más clientes, más conviene apoyarse en la OLT para los límites base.</p></div>
+      </div>
+    </section>
+
+    <!-- 11 ronda 2 -->
+    <section class="slide h-full flex-col items-center justify-center px-8">
+      <div class="text-5xl mb-4">🧠</div>
+      <h2 class="text-4xl md:text-5xl font-black mb-8 text-center text-fuchsia-600 dark:text-fuchsia-300">Ronda de preguntas · 2</h2>
+      <div class="space-y-4 max-w-3xl w-full">
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><p class="font-semibold">5. ¿Dónde es más flexible el control?</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><p class="font-semibold">6. ¿Por qué evitar el doble límite?</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><p class="font-semibold">7. ¿Cómo se asigna velocidad por cliente PPPoE?</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><p class="font-semibold">8. ¿Qué libera limitar en la OLT?</p></div>
+      </div>
+    </section>
+
+    <!-- 12 resumen -->
+    <section class="slide h-full flex-col items-center justify-center px-8 text-center">
+      <div class="text-5xl mb-4">✅</div>
+      <h2 class="text-4xl md:text-5xl font-black mb-8">Resumen del tema</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-3xl w-full text-left">
+        <div class="rounded-xl bg-fuchsia-500/10 border border-fuchsia-400/30 p-5">Puedes limitar en la <b>OLT</b> (fibra) o en el <b>MikroTik</b> (router).</div>
+        <div class="rounded-xl bg-fuchsia-500/10 border border-fuchsia-400/30 p-5">El detalle por plan/cliente suele ir en el <b>MikroTik</b> vía rate-limit.</div>
+        <div class="rounded-xl bg-fuchsia-500/10 border border-fuchsia-400/30 p-5">La <b>OLT</b> aporta límites base o agregados y libera CPU.</div>
+        <div class="rounded-xl bg-fuchsia-500/10 border border-fuchsia-400/30 p-5">Evita el <b>doble límite</b>: define un único punto de control.</div>
+      </div>
+      <p class="mt-8 text-slate-500">Siguiente tema: Vulnerabilidades en MikroTik 🛡️</p>
+    </section>
+
+  </main>
+
+  <div class="no-print relative flex items-center justify-between px-6 py-3 border-t border-slate-200 dark:border-slate-800">
+    <button onclick="prev()" class="px-5 py-2 rounded-lg bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 font-semibold transition">← Anterior</button>
+    <div id="dots" class="hidden md:flex gap-2"></div>
+    <button onclick="next()" class="px-5 py-2 rounded-lg bg-fuchsia-500 hover:bg-fuchsia-400 text-white font-bold transition">Siguiente →</button>
+  </div>
+
+  <script>
+    const slides = document.querySelectorAll('.slide');
+    let cur = 0;
+    const dots = document.getElementById('dots');
+    slides.forEach((_, i) => { const d=document.createElement('button'); d.onclick=()=>go(i); dots.appendChild(d); });
+    function render(){
+      slides.forEach((s,i)=>s.classList.toggle('active', i===cur));
+      document.getElementById('counter').textContent = `${cur+1}/${slides.length}`;
+      [...dots.children].forEach((d,i)=>d.className=`h-2.5 rounded-full transition ${i===cur?'bg-fuchsia-500 w-6':'bg-slate-300 dark:bg-slate-600 w-2.5'}`);
+    }
+    function go(i){ cur=Math.max(0,Math.min(slides.length-1,i)); render(); }
+    function next(){ go(cur+1); } function prev(){ go(cur-1); }
+    function downloadPDF(){ window.print(); }
+    function toggleTheme(){ const el=document.documentElement; el.classList.toggle('dark'); localStorage.setItem('theme', el.classList.contains('dark')?'dark':'light'); updateThemeUI(); }
+    function updateThemeUI(){ const dark=document.documentElement.classList.contains('dark'); document.querySelectorAll('.theme-icon').forEach(e=>e.textContent=dark?'☀️':'🌙'); }
+    document.addEventListener('keydown',e=>{ if(e.key==='ArrowRight')next(); if(e.key==='ArrowLeft')prev(); });
+    updateThemeUI(); render();
+  </script>
+</body>
+</html>

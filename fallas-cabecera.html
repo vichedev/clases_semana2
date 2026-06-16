@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fallas en una cabecera de internet</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800;900&display=swap" rel="stylesheet">
+  <style type="text/tailwindcss">@custom-variant dark (&:where(.dark, .dark *));</style>
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .slide { display:none; } .slide.active { display:flex; }
+    @media print {
+      @page { margin: 0; }
+      .no-print { display:none !important; }
+      html, body { height:auto !important; overflow:visible !important; background:#fff !important; }
+      main { height:auto !important; } .bg-decor { display:none !important; }
+      .slide { display:flex !important; page-break-after:always; height:96vh; padding-top:78px !important; position:relative; }
+      .slide::before {
+        content: "🌡️ FALLAS EN LA CABECERA";
+        position:absolute; top:0; left:0; right:0;
+        padding:18px 24px; text-align:center;
+        font-size:17px; font-weight:800; letter-spacing:0.04em; color:#ea580c;
+        background:#ffffff; border-bottom:2px solid #e2e8f0;
+      }
+      .slide h1 { color:#ea580c !important; -webkit-text-fill-color:#ea580c !important; background:none !important; }
+    }
+    .slide .font-mono { word-break: break-word; }
+    @media screen and (max-width: 767px) {
+      .slide { justify-content: flex-start !important; padding: 1.25rem !important; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+      .slide h1 { font-size: 2.1rem !important; line-height: 1.15 !important; }
+      .slide h2 { font-size: 1.55rem !important; line-height: 1.25 !important; }
+    }
+  </style>
+  <script>(function(){ if (localStorage.getItem('theme') === 'dark') document.documentElement.classList.add('dark'); })();</script>
+</head>
+<body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-white h-screen overflow-hidden transition-colors duration-300">
+
+  <div class="bg-decor fixed inset-0 overflow-hidden pointer-events-none">
+    <div class="absolute -top-40 -left-40 w-96 h-96 bg-orange-400/20 dark:bg-orange-600/25 rounded-full blur-3xl"></div>
+    <div class="absolute -bottom-40 -right-40 w-96 h-96 bg-red-400/20 dark:bg-red-600/20 rounded-full blur-3xl"></div>
+  </div>
+
+  <div class="no-print relative flex items-center justify-between px-6 py-3 border-b border-slate-200 dark:border-slate-800">
+    <a href="index.html" class="text-slate-500 dark:text-slate-400 hover:text-orange-600 dark:hover:text-white text-sm font-semibold">← Inicio</a>
+    <span class="hidden sm:block text-orange-600 dark:text-orange-400 text-xs md:text-sm font-bold tracking-wider text-center">🌡️ FALLAS EN LA CABECERA</span>
+    <div class="flex items-center gap-2">
+      <button onclick="downloadPDF()" class="px-3 py-1.5 rounded-lg bg-orange-500 hover:bg-orange-400 text-white text-sm font-semibold transition">📄 PDF</button>
+      <button onclick="toggleTheme()" class="w-9 h-9 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center justify-center"><span class="theme-icon">🌙</span></button>
+      <span id="counter" class="text-slate-500 dark:text-slate-400 text-sm font-mono w-12 text-right">1/12</span>
+    </div>
+  </div>
+
+  <main class="relative h-[calc(100vh-112px)]">
+
+    <!-- 1 portada -->
+    <section class="slide active h-full flex-col items-center justify-center text-center px-8">
+      <span class="text-orange-600 dark:text-orange-400 font-bold tracking-widest mb-4">INFRAESTRUCTURA</span>
+      <h1 class="text-5xl md:text-7xl font-black max-w-4xl leading-tight bg-gradient-to-r from-orange-500 to-red-500 dark:from-orange-300 dark:to-red-300 bg-clip-text text-transparent pb-2">Fallas en una cabecera de internet</h1>
+      <p class="mt-5 text-lg text-slate-500">El corazón de la red de un proveedor (ISP)</p>
+      <p class="mt-6 text-xl md:text-2xl text-slate-600 dark:text-slate-300 max-w-3xl">Las cabeceras suelen fallar más por su <span class="text-orange-600 dark:text-orange-300 font-semibold">entorno (energía y calor)</span> que por los equipos en sí. El ambiente importa tanto como el hardware.</p>
+    </section>
+
+    <!-- 2 fallas comunes -->
+    <section class="slide h-full flex-col items-center justify-center px-8">
+      <h2 class="text-4xl md:text-5xl font-black mb-10 text-center">Fallas comunes en una cabecera</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-5xl w-full">
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-6"><div class="text-3xl mb-2">⚡</div><h3 class="font-bold text-orange-600 dark:text-orange-300">Cortes de energía</h3><p class="text-slate-500 dark:text-slate-400 text-sm mt-1">Sin UPS ni planta, todo el servicio cae.</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-6"><div class="text-3xl mb-2">🔥</div><h3 class="font-bold text-orange-600 dark:text-orange-300">Sobrecalentamiento</h3><p class="text-slate-500 dark:text-slate-400 text-sm mt-1">Equipos que trabajan a más temperatura de la debida.</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-6"><div class="text-3xl mb-2">📈</div><h3 class="font-bold text-orange-600 dark:text-orange-300">Picos de tráfico</h3><p class="text-slate-500 dark:text-slate-400 text-sm mt-1">Saturación que degrada o tumba la red.</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-6"><div class="text-3xl mb-2">✂️</div><h3 class="font-bold text-orange-600 dark:text-orange-300">Cortes de fibra</h3><p class="text-slate-500 dark:text-slate-400 text-sm mt-1">Daños físicos en el enlace dejan sin servicio.</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-6"><div class="text-3xl mb-2">🌫️</div><h3 class="font-bold text-orange-600 dark:text-orange-300">Mala ventilación / polvo</h3><p class="text-slate-500 dark:text-slate-400 text-sm mt-1">El polvo tapa ventiladores y disipadores.</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-6"><div class="text-3xl mb-2">⚙️</div><h3 class="font-bold text-orange-600 dark:text-orange-300">Errores de configuración</h3><p class="text-slate-500 dark:text-slate-400 text-sm mt-1">Cambios mal aplicados que rompen el servicio.</p></div>
+      </div>
+    </section>
+
+    <!-- 3 problema silencioso -->
+    <section class="slide h-full flex-col items-center justify-center px-8 text-center">
+      <div class="text-5xl mb-4">🤫</div>
+      <h2 class="text-4xl md:text-5xl font-black mb-6">El problema silencioso</h2>
+      <p class="text-xl md:text-2xl text-slate-600 dark:text-slate-300 max-w-3xl">No monitorear la <span class="text-orange-600 dark:text-orange-300 font-semibold">temperatura de los equipos</span>.</p>
+      <p class="mt-6 text-slate-600 dark:text-slate-300 max-w-2xl">El calor es una de las causas <b>más frecuentes y a la vez más subestimadas</b> de fallas en una cabecera. Como no se ve ni se mide, pasa desapercibido hasta que el equipo se apaga o se daña.</p>
+      <div class="mt-8 rounded-2xl bg-orange-500/10 border border-orange-400/40 px-8 py-5 max-w-2xl"><p class="text-slate-700 dark:text-slate-200">"Lo que no se mide, no se controla": sin sensores de temperatura, el operador trabaja a ciegas.</p></div>
+    </section>
+
+    <!-- 4 por qué importa el calor -->
+    <section class="slide h-full flex-col items-center justify-center px-8">
+      <h2 class="text-4xl md:text-5xl font-black mb-10 text-center">¿Por qué importa el calor?</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-4xl w-full">
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-6"><h3 class="font-bold text-orange-600 dark:text-orange-300 mb-1">📉 Reduce la vida útil</h3><p class="text-slate-500 dark:text-slate-400 text-sm">El calor desgasta los componentes y acorta la vida del equipo.</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-6"><h3 class="font-bold text-orange-600 dark:text-orange-300 mb-1">🔄 Provoca reinicios</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Por protección, los equipos se reinician al sobrecalentarse.</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-6"><h3 class="font-bold text-orange-600 dark:text-orange-300 mb-1">🐢 Throttling</h3><p class="text-slate-500 dark:text-slate-400 text-sm">El equipo baja su rendimiento para enfriarse, y la red se vuelve lenta.</p></div>
+        <div class="rounded-xl bg-orange-500/10 border border-orange-400/40 p-6"><h3 class="font-bold text-orange-600 dark:text-orange-300 mb-1">👻 Fallas intermitentes</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Aparecen y desaparecen; son muy difíciles de diagnosticar.</p></div>
+      </div>
+    </section>
+
+    <!-- 5 causas de exceso de temperatura -->
+    <section class="slide h-full flex-col items-center justify-center px-8">
+      <h2 class="text-4xl md:text-5xl font-black mb-10 text-center">Causas de exceso de temperatura</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-5xl w-full">
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-6"><div class="text-3xl mb-2">❄️</div><h3 class="font-bold text-orange-600 dark:text-orange-300">Sin aire acondicionado</h3><p class="text-slate-500 dark:text-slate-400 text-sm mt-1">El cuarto de equipos no se enfría.</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-6"><div class="text-3xl mb-2">🌀</div><h3 class="font-bold text-orange-600 dark:text-orange-300">Mala ventilación del rack</h3><p class="text-slate-500 dark:text-slate-400 text-sm mt-1">El aire caliente no logra salir.</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-6"><div class="text-3xl mb-2">🧹</div><h3 class="font-bold text-orange-600 dark:text-orange-300">Acumulación de polvo</h3><p class="text-slate-500 dark:text-slate-400 text-sm mt-1">Tapa ventiladores y rejillas.</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-6"><div class="text-3xl mb-2">📦</div><h3 class="font-bold text-orange-600 dark:text-orange-300">Equipos amontonados</h3><p class="text-slate-500 dark:text-slate-400 text-sm mt-1">Sin espacio entre ellos, el calor se concentra.</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-6"><div class="text-3xl mb-2">🔌</div><h3 class="font-bold text-orange-600 dark:text-orange-300">Fuente sobrecargada</h3><p class="text-slate-500 dark:text-slate-400 text-sm mt-1">Una fuente de poder al límite genera más calor.</p></div>
+        <div class="rounded-xl bg-orange-500/10 border border-orange-400/40 p-6"><div class="text-3xl mb-2">🌡️</div><h3 class="font-bold text-orange-600 dark:text-orange-300">Suma de factores</h3><p class="text-slate-500 dark:text-slate-400 text-sm mt-1">Varias causas juntas disparan la temperatura.</p></div>
+      </div>
+    </section>
+
+    <!-- 6 monitorear en MikroTik -->
+    <section class="slide h-full flex-col items-center justify-center px-8">
+      <h2 class="text-4xl md:text-5xl font-black mb-8 text-center">Monitorear en MikroTik</h2>
+      <p class="text-slate-600 dark:text-slate-300 max-w-2xl mb-8 text-center">Muchos equipos MikroTik ya traen <b>sensores de temperatura</b> integrados. Solo hay que consultarlos y graficarlos.</p>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5 max-w-4xl w-full">
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-6"><div class="text-3xl mb-2">🩺</div><h3 class="font-bold text-orange-600 dark:text-orange-300">Ver la salud</h3><p class="text-slate-500 dark:text-slate-400 text-sm mt-1 font-mono">/system health print</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-6"><div class="text-3xl mb-2">📡</div><h3 class="font-bold text-orange-600 dark:text-orange-300">Exportar por SNMP</h3><p class="text-slate-500 dark:text-slate-400 text-sm mt-1">Publica la temperatura para herramientas externas.</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-6"><div class="text-3xl mb-2">📊</div><h3 class="font-bold text-orange-600 dark:text-orange-300">Graficar</h3><p class="text-slate-500 dark:text-slate-400 text-sm mt-1">The Dude, Zabbix o Grafana.</p></div>
+      </div>
+    </section>
+
+    <!-- 7 contenido adicional - alertas -->
+    <section class="slide h-full flex-col items-center justify-center px-8">
+      <span class="text-orange-600 dark:text-orange-400 font-bold tracking-widest mb-3 text-center block">CONTENIDO ADICIONAL</span>
+      <h2 class="text-4xl md:text-5xl font-black mb-8 text-center">Alertas de temperatura</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl w-full">
+        <div class="rounded-2xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-7 text-center"><div class="text-3xl mb-2">🚨</div><h3 class="font-bold text-orange-600 dark:text-orange-300 mb-2">Avisos por umbral</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Configura un aviso cuando la temperatura suba de cierto límite (Netwatch / SNMP).</p></div>
+        <div class="rounded-2xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-7 text-center"><div class="text-3xl mb-2">🌡️</div><h3 class="font-bold text-orange-600 dark:text-orange-300 mb-2">Sensores ambientales</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Sensores dentro del rack que miden el aire, no solo el equipo.</p></div>
+        <div class="rounded-2xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-7 text-center"><div class="text-3xl mb-2">📍</div><h3 class="font-bold text-orange-600 dark:text-orange-300 mb-2">Termómetros</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Termómetros físicos en el cuarto como respaldo de verificación.</p></div>
+      </div>
+    </section>
+
+    <!-- 8 ronda 1 -->
+    <section class="slide h-full flex-col items-center justify-center px-8">
+      <div class="text-5xl mb-4">🙋</div>
+      <h2 class="text-4xl md:text-5xl font-black mb-8 text-center text-orange-600 dark:text-orange-300">Ronda de preguntas · 1</h2>
+      <div class="space-y-4 max-w-3xl w-full">
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><p class="font-semibold">1. Nombra 3 fallas comunes en una cabecera.</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><p class="font-semibold">2. ¿Cuál es el "problema silencioso"?</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><p class="font-semibold">3. ¿Qué efectos causa el calor en los equipos?</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><p class="font-semibold">4. ¿Con qué comando ve la salud/temperatura un MikroTik?</p></div>
+      </div>
+    </section>
+
+    <!-- 9 buenas prácticas climatización -->
+    <section class="slide h-full flex-col items-center justify-center px-8">
+      <h2 class="text-4xl md:text-5xl font-black mb-10 text-center">Buenas prácticas de climatización</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-4xl w-full">
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-6"><h3 class="font-bold text-orange-600 dark:text-orange-300 mb-1">❄️ Aire acondicionado</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Idealmente redundante, para que nunca falte enfriamiento.</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-6"><h3 class="font-bold text-orange-600 dark:text-orange-300 mb-1">💧 Control de humedad</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Ni muy seco ni muy húmedo: evita condensación y estática.</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-6"><h3 class="font-bold text-orange-600 dark:text-orange-300 mb-1">🗄️ Orden del rack</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Organización y cableado limpio para que el aire circule.</p></div>
+        <div class="rounded-xl bg-orange-500/10 border border-orange-400/40 p-6"><h3 class="font-bold text-orange-600 dark:text-orange-300 mb-1">🧽 Limpieza periódica</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Mantenimiento regular para quitar polvo y revisar ventiladores.</p></div>
+      </div>
+    </section>
+
+    <!-- 10 buenas prácticas continuidad -->
+    <section class="slide h-full flex-col items-center justify-center px-8">
+      <h2 class="text-4xl md:text-5xl font-black mb-10 text-center">Buenas prácticas de continuidad</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-4xl w-full">
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-6"><h3 class="font-bold text-orange-600 dark:text-orange-300 mb-1">🔋 UPS y energía respaldada</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Mantienen los equipos vivos ante cortes de luz.</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-6"><h3 class="font-bold text-orange-600 dark:text-orange-300 mb-1">📈 Registro histórico</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Guarda la temperatura en el tiempo para detectar tendencias.</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-6"><h3 class="font-bold text-orange-600 dark:text-orange-300 mb-1">🚨 Alarmas</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Avisan al instante cuando algo se sale del rango normal.</p></div>
+        <div class="rounded-xl bg-orange-500/10 border border-orange-400/40 p-6"><h3 class="font-bold text-orange-600 dark:text-orange-300 mb-1">👁️ Monitoreo 24/7</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Vigilancia proactiva para actuar antes de que falle.</p></div>
+      </div>
+    </section>
+
+    <!-- 11 ronda 2 -->
+    <section class="slide h-full flex-col items-center justify-center px-8">
+      <div class="text-5xl mb-4">🧠</div>
+      <h2 class="text-4xl md:text-5xl font-black mb-8 text-center text-orange-600 dark:text-orange-300">Ronda de preguntas · 2</h2>
+      <div class="space-y-4 max-w-3xl w-full">
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><p class="font-semibold">5. ¿Por qué el calor causa fallas intermitentes?</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><p class="font-semibold">6. Menciona 2 buenas prácticas de climatización.</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><p class="font-semibold">7. ¿Cómo se grafica la temperatura?</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><p class="font-semibold">8. ¿Para qué sirve un UPS?</p></div>
+      </div>
+    </section>
+
+    <!-- 12 resumen -->
+    <section class="slide h-full flex-col items-center justify-center px-8 text-center">
+      <div class="text-5xl mb-4">✅</div>
+      <h2 class="text-4xl md:text-5xl font-black mb-8">Resumen del tema</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-3xl w-full text-left">
+        <div class="rounded-xl bg-orange-500/10 border border-orange-400/30 p-5">Las cabeceras fallan mucho por <b>energía y calor</b>, no solo por los equipos.</div>
+        <div class="rounded-xl bg-orange-500/10 border border-orange-400/30 p-5">El <b>problema silencioso</b> es no monitorear la temperatura.</div>
+        <div class="rounded-xl bg-orange-500/10 border border-orange-400/30 p-5">El calor causa <b>throttling, reinicios y fallas intermitentes</b>.</div>
+        <div class="rounded-xl bg-orange-500/10 border border-orange-400/30 p-5">Se previene con <b>climatización, UPS, alertas y monitoreo 24/7</b>.</div>
+      </div>
+      <p class="mt-8 text-slate-500">Fin del curso · ¡Gracias! 🎉</p>
+    </section>
+
+  </main>
+
+  <div class="no-print relative flex items-center justify-between px-6 py-3 border-t border-slate-200 dark:border-slate-800">
+    <button onclick="prev()" class="px-5 py-2 rounded-lg bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 font-semibold transition">← Anterior</button>
+    <div id="dots" class="hidden md:flex gap-2"></div>
+    <button onclick="next()" class="px-5 py-2 rounded-lg bg-orange-500 hover:bg-orange-400 text-white font-bold transition">Siguiente →</button>
+  </div>
+
+  <script>
+    const slides = document.querySelectorAll('.slide');
+    let cur = 0;
+    const dots = document.getElementById('dots');
+    slides.forEach((_, i) => { const d=document.createElement('button'); d.onclick=()=>go(i); dots.appendChild(d); });
+    function render(){
+      slides.forEach((s,i)=>s.classList.toggle('active', i===cur));
+      document.getElementById('counter').textContent = `${cur+1}/${slides.length}`;
+      [...dots.children].forEach((d,i)=>d.className=`h-2.5 rounded-full transition ${i===cur?'bg-orange-500 w-6':'bg-slate-300 dark:bg-slate-600 w-2.5'}`);
+    }
+    function go(i){ cur=Math.max(0,Math.min(slides.length-1,i)); render(); }
+    function next(){ go(cur+1); } function prev(){ go(cur-1); }
+    function downloadPDF(){ window.print(); }
+    function toggleTheme(){ const el=document.documentElement; el.classList.toggle('dark'); localStorage.setItem('theme', el.classList.contains('dark')?'dark':'light'); updateThemeUI(); }
+    function updateThemeUI(){ const dark=document.documentElement.classList.contains('dark'); document.querySelectorAll('.theme-icon').forEach(e=>e.textContent=dark?'☀️':'🌙'); }
+    document.addEventListener('keydown',e=>{ if(e.key==='ArrowRight')next(); if(e.key==='ArrowLeft')prev(); });
+    updateThemeUI(); render();
+  </script>
+</body>
+</html>

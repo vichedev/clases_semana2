@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Semana de Cursos · MikroTik y RouterOS</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800;900&display=swap" rel="stylesheet">
+  <style type="text/tailwindcss">
+    @custom-variant dark (&:where(.dark, .dark *));
+  </style>
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+  </style>
+  <script>
+    (function(){ if (localStorage.getItem('theme') === 'dark') document.documentElement.classList.add('dark'); })();
+  </script>
+</head>
+<body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-white min-h-screen transition-colors duration-300">
+
+  <!-- Fondo decorativo -->
+  <div class="fixed inset-0 overflow-hidden pointer-events-none">
+    <div class="absolute -top-40 -left-40 w-96 h-96 bg-indigo-400/20 dark:bg-indigo-600/30 rounded-full blur-3xl"></div>
+    <div class="absolute top-1/3 -right-40 w-96 h-96 bg-cyan-400/20 dark:bg-cyan-500/20 rounded-full blur-3xl"></div>
+    <div class="absolute -bottom-40 left-1/3 w-96 h-96 bg-fuchsia-400/20 dark:bg-fuchsia-600/20 rounded-full blur-3xl"></div>
+  </div>
+
+  <!-- Botón de tema -->
+  <button onclick="toggleTheme()" class="fixed top-4 right-4 z-50 flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-lg hover:scale-105 transition">
+    <span class="theme-icon text-lg">🌙</span>
+    <span class="theme-label hidden sm:inline text-sm font-semibold">Modo oscuro</span>
+  </button>
+
+  <main class="relative max-w-6xl mx-auto px-6 py-16">
+
+    <!-- Encabezado -->
+    <header class="text-center mb-16">
+      <span class="inline-block px-4 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-400/30 text-indigo-600 dark:text-indigo-300 text-sm font-semibold tracking-wide mb-6">
+        SEMANA DE CURSOS · 2026
+      </span>
+      <h1 class="text-5xl md:text-7xl font-black tracking-tight bg-gradient-to-r from-cyan-500 via-indigo-500 to-fuchsia-500 dark:from-cyan-300 dark:via-indigo-300 dark:to-fuchsia-300 bg-clip-text text-transparent leading-tight pb-2">
+        MikroTik &amp; RouterOS
+      </h1>
+      <p class="mt-6 text-lg md:text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
+        Los 7 temas de esta semana de cursos sobre cabeceras de internet. Cada tema con <span class="font-semibold text-slate-800 dark:text-slate-200">12 diapositivas</span>: teoría, recomendaciones prácticas y rondas de preguntas.
+      </p>
+    </header>
+
+    <!-- Cronograma por semanas -->
+    <section class="space-y-5">
+
+      <!-- Tema 1 -->
+      <a href="routeros.html" class="group flex flex-col md:flex-row md:items-center gap-5 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 p-6 md:p-7 hover:border-cyan-400 dark:hover:border-cyan-400/60 hover:shadow-xl hover:shadow-cyan-500/5 transition-all duration-300">
+        <div class="flex items-center gap-5 md:w-56 flex-shrink-0">
+          <div class="flex flex-col items-center justify-center w-20 h-20 rounded-2xl bg-cyan-500/10 text-cyan-600 dark:text-cyan-300 flex-shrink-0">
+            <span class="text-[10px] font-bold tracking-widest">TEMA</span>
+            <span class="text-3xl font-black leading-none">1</span>
+          </div>
+          <div class="text-4xl">📟</div>
+        </div>
+        <div class="flex-1">
+          <h2 class="text-2xl font-bold mb-1">¿Qué es RouterOS?</h2>
+          <p class="text-slate-600 dark:text-slate-400 text-sm">El sistema operativo de MikroTik basado en Linux: funciones, versiones, licencias y administración.</p>
+          <span class="inline-block mt-2 text-xs font-semibold px-2.5 py-1 rounded-full bg-cyan-500/10 text-cyan-600 dark:text-cyan-300">12 diapositivas</span>
+        </div>
+        <span class="hidden md:flex items-center gap-1 text-cyan-600 dark:text-cyan-300 font-semibold">Entrar <span class="group-hover:translate-x-1 transition-transform">→</span></span>
+      </a>
+
+      <!-- Tema 2 -->
+      <a href="mikrotik.html" class="group flex flex-col md:flex-row md:items-center gap-5 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 p-6 md:p-7 hover:border-indigo-400 dark:hover:border-indigo-400/60 hover:shadow-xl hover:shadow-indigo-500/5 transition-all duration-300">
+        <div class="flex items-center gap-5 md:w-56 flex-shrink-0">
+          <div class="flex flex-col items-center justify-center w-20 h-20 rounded-2xl bg-indigo-500/10 text-indigo-600 dark:text-indigo-300 flex-shrink-0">
+            <span class="text-[10px] font-bold tracking-widest">TEMA</span>
+            <span class="text-3xl font-black leading-none">2</span>
+          </div>
+          <div class="text-4xl">🛰️</div>
+        </div>
+        <div class="flex-1">
+          <h2 class="text-2xl font-bold mb-1">¿Qué es MikroTik?</h2>
+          <p class="text-slate-600 dark:text-slate-400 text-sm">La empresa y sus equipos: RouterBOARD, líneas de producto (CCR, CRS, hAP) y por qué es tan usado.</p>
+          <span class="inline-block mt-2 text-xs font-semibold px-2.5 py-1 rounded-full bg-indigo-500/10 text-indigo-600 dark:text-indigo-300">12 diapositivas</span>
+        </div>
+        <span class="hidden md:flex items-center gap-1 text-indigo-600 dark:text-indigo-300 font-semibold">Entrar <span class="group-hover:translate-x-1 transition-transform">→</span></span>
+      </a>
+
+      <!-- Tema 3 -->
+      <a href="nat-mikrotik.html" class="group flex flex-col md:flex-row md:items-center gap-5 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 p-6 md:p-7 hover:border-emerald-400 dark:hover:border-emerald-400/60 hover:shadow-xl hover:shadow-emerald-500/5 transition-all duration-300">
+        <div class="flex items-center gap-5 md:w-56 flex-shrink-0">
+          <div class="flex flex-col items-center justify-center w-20 h-20 rounded-2xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-300 flex-shrink-0">
+            <span class="text-[10px] font-bold tracking-widest">TEMA</span>
+            <span class="text-3xl font-black leading-none">3</span>
+          </div>
+          <div class="text-4xl">🔁</div>
+        </div>
+        <div class="flex-1">
+          <h2 class="text-2xl font-bold mb-1">¿Es recomendable hacer NAT en MikroTik?</h2>
+          <p class="text-slate-600 dark:text-slate-400 text-sm">Masquerade vs src-nat, ventajas, CGNAT, carga de CPU y cuándo conviene (o no).</p>
+          <span class="inline-block mt-2 text-xs font-semibold px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-300">12 diapositivas</span>
+        </div>
+        <span class="hidden md:flex items-center gap-1 text-emerald-600 dark:text-emerald-300 font-semibold">Entrar <span class="group-hover:translate-x-1 transition-transform">→</span></span>
+      </a>
+
+      <!-- Tema 4 -->
+      <a href="mikrotik-cabecera.html" class="group flex flex-col md:flex-row md:items-center gap-5 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 p-6 md:p-7 hover:border-amber-400 dark:hover:border-amber-400/60 hover:shadow-xl hover:shadow-amber-500/5 transition-all duration-300">
+        <div class="flex items-center gap-5 md:w-56 flex-shrink-0">
+          <div class="flex flex-col items-center justify-center w-20 h-20 rounded-2xl bg-amber-500/10 text-amber-600 dark:text-amber-300 flex-shrink-0">
+            <span class="text-[10px] font-bold tracking-widest">TEMA</span>
+            <span class="text-3xl font-black leading-none">4</span>
+          </div>
+          <div class="text-4xl">🏗️</div>
+        </div>
+        <div class="flex-1">
+          <h2 class="text-2xl font-bold mb-1">¿Usar solo MikroTik como cabecera?</h2>
+          <p class="text-slate-600 dark:text-slate-400 text-sm">Qué es una cabecera, qué puede hacer un solo equipo, riesgos, redundancia y cuándo separar funciones.</p>
+          <span class="inline-block mt-2 text-xs font-semibold px-2.5 py-1 rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-300">12 diapositivas</span>
+        </div>
+        <span class="hidden md:flex items-center gap-1 text-amber-600 dark:text-amber-300 font-semibold">Entrar <span class="group-hover:translate-x-1 transition-transform">→</span></span>
+      </a>
+
+      <!-- Tema 5 -->
+      <a href="ancho-banda.html" class="group flex flex-col md:flex-row md:items-center gap-5 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 p-6 md:p-7 hover:border-fuchsia-400 dark:hover:border-fuchsia-400/60 hover:shadow-xl hover:shadow-fuchsia-500/5 transition-all duration-300">
+        <div class="flex items-center gap-5 md:w-56 flex-shrink-0">
+          <div class="flex flex-col items-center justify-center w-20 h-20 rounded-2xl bg-fuchsia-500/10 text-fuchsia-600 dark:text-fuchsia-300 flex-shrink-0">
+            <span class="text-[10px] font-bold tracking-widest">TEMA</span>
+            <span class="text-3xl font-black leading-none">5</span>
+          </div>
+          <div class="text-4xl">📊</div>
+        </div>
+        <div class="flex-1">
+          <h2 class="text-2xl font-bold mb-1">¿Ancho de banda en la OLT o el MikroTik?</h2>
+          <p class="text-slate-600 dark:text-slate-400 text-sm">Limitar en la OLT vs en el router: Simple Queues, PCQ, rate-limit PPPoE y cómo evitar el doble límite.</p>
+          <span class="inline-block mt-2 text-xs font-semibold px-2.5 py-1 rounded-full bg-fuchsia-500/10 text-fuchsia-600 dark:text-fuchsia-300">12 diapositivas</span>
+        </div>
+        <span class="hidden md:flex items-center gap-1 text-fuchsia-600 dark:text-fuchsia-300 font-semibold">Entrar <span class="group-hover:translate-x-1 transition-transform">→</span></span>
+      </a>
+
+      <!-- Tema 6 -->
+      <a href="vulnerabilidades-mikrotik.html" class="group flex flex-col md:flex-row md:items-center gap-5 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 p-6 md:p-7 hover:border-rose-400 dark:hover:border-rose-400/60 hover:shadow-xl hover:shadow-rose-500/5 transition-all duration-300">
+        <div class="flex items-center gap-5 md:w-56 flex-shrink-0">
+          <div class="flex flex-col items-center justify-center w-20 h-20 rounded-2xl bg-rose-500/10 text-rose-600 dark:text-rose-300 flex-shrink-0">
+            <span class="text-[10px] font-bold tracking-widest">TEMA</span>
+            <span class="text-3xl font-black leading-none">6</span>
+          </div>
+          <div class="text-4xl">🛡️</div>
+        </div>
+        <div class="flex-1">
+          <h2 class="text-2xl font-bold mb-1">Vulnerabilidades en MikroTik</h2>
+          <p class="text-slate-600 dark:text-slate-400 text-sm">Casos reales, vectores de ataque y, sobre todo, hardening y buenas prácticas de seguridad.</p>
+          <span class="inline-block mt-2 text-xs font-semibold px-2.5 py-1 rounded-full bg-rose-500/10 text-rose-600 dark:text-rose-300">12 diapositivas</span>
+        </div>
+        <span class="hidden md:flex items-center gap-1 text-rose-600 dark:text-rose-300 font-semibold">Entrar <span class="group-hover:translate-x-1 transition-transform">→</span></span>
+      </a>
+
+      <!-- Tema 7 -->
+      <a href="fallas-cabecera.html" class="group flex flex-col md:flex-row md:items-center gap-5 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 p-6 md:p-7 hover:border-orange-400 dark:hover:border-orange-400/60 hover:shadow-xl hover:shadow-orange-500/5 transition-all duration-300">
+        <div class="flex items-center gap-5 md:w-56 flex-shrink-0">
+          <div class="flex flex-col items-center justify-center w-20 h-20 rounded-2xl bg-orange-500/10 text-orange-600 dark:text-orange-300 flex-shrink-0">
+            <span class="text-[10px] font-bold tracking-widest">TEMA</span>
+            <span class="text-3xl font-black leading-none">7</span>
+          </div>
+          <div class="text-4xl">🌡️</div>
+        </div>
+        <div class="flex-1">
+          <h2 class="text-2xl font-bold mb-1">Fallas en una cabecera de internet</h2>
+          <p class="text-slate-600 dark:text-slate-400 text-sm">Las fallas más comunes y el problema silencioso: el desconocimiento de la temperatura de los equipos.</p>
+          <span class="inline-block mt-2 text-xs font-semibold px-2.5 py-1 rounded-full bg-orange-500/10 text-orange-600 dark:text-orange-300">12 diapositivas</span>
+        </div>
+        <span class="hidden md:flex items-center gap-1 text-orange-600 dark:text-orange-300 font-semibold">Entrar <span class="group-hover:translate-x-1 transition-transform">→</span></span>
+      </a>
+
+    </section>
+
+    <!-- Ayuda -->
+    <div class="mt-10 grid grid-cols-1 md:grid-cols-2 gap-5">
+      <div class="rounded-2xl bg-gradient-to-br from-indigo-500/10 to-cyan-500/10 border border-indigo-400/20 p-6">
+        <h3 class="font-bold mb-2">💡 Cómo navegar</h3>
+        <p class="text-slate-600 dark:text-slate-300 text-sm">Dentro de cada tema usa las <b>flechas ← →</b> del teclado, los botones o los puntos inferiores para cambiar de diapositiva.</p>
+      </div>
+      <div class="rounded-2xl bg-gradient-to-br from-fuchsia-500/10 to-amber-500/10 border border-fuchsia-400/20 p-6">
+        <h3 class="font-bold mb-2">📄 Descargar en PDF</h3>
+        <p class="text-slate-600 dark:text-slate-300 text-sm">Cada tema tiene un botón <b>"Descargar PDF"</b> que exporta TODAS sus diapositivas listas para imprimir o compartir.</p>
+      </div>
+    </div>
+
+    <footer class="text-center mt-16 text-slate-500 text-sm">
+      <p>Material de capacitación · 7 temas · 84 diapositivas</p>
+    </footer>
+
+  </main>
+
+  <script>
+    function toggleTheme(){
+      const el = document.documentElement;
+      el.classList.toggle('dark');
+      localStorage.setItem('theme', el.classList.contains('dark') ? 'dark' : 'light');
+      updateThemeUI();
+    }
+    function updateThemeUI(){
+      const dark = document.documentElement.classList.contains('dark');
+      document.querySelectorAll('.theme-icon').forEach(e => e.textContent = dark ? '☀️' : '🌙');
+      document.querySelectorAll('.theme-label').forEach(e => e.textContent = dark ? 'Modo claro' : 'Modo oscuro');
+    }
+    updateThemeUI();
+  </script>
+</body>
+</html>

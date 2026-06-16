@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>¿Qué es RouterOS?</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800;900&display=swap" rel="stylesheet">
+  <style type="text/tailwindcss">@custom-variant dark (&:where(.dark, .dark *));</style>
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .slide { display:none; } .slide.active { display:flex; }
+    @media print {
+      @page { margin: 0; }
+      .no-print { display:none !important; }
+      html, body { height:auto !important; overflow:visible !important; background:#fff !important; }
+      main { height:auto !important; } .bg-decor { display:none !important; }
+      .slide { display:flex !important; page-break-after:always; height:96vh; padding-top:78px !important; position:relative; }
+      .slide::before {
+        content: "📟 ¿QUÉ ES ROUTEROS?";
+        position:absolute; top:0; left:0; right:0;
+        padding:18px 24px; text-align:center;
+        font-size:17px; font-weight:800; letter-spacing:0.04em; color:#0891b2;
+        background:#ffffff; border-bottom:2px solid #e2e8f0;
+      }
+      .slide h1 { color:#0891b2 !important; -webkit-text-fill-color:#0891b2 !important; background:none !important; }
+    }
+    .slide .font-mono { word-break: break-word; }
+    @media screen and (max-width: 767px) {
+      .slide { justify-content: flex-start !important; padding: 1.25rem !important; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+      .slide h1 { font-size: 2.1rem !important; line-height: 1.15 !important; }
+      .slide h2 { font-size: 1.55rem !important; line-height: 1.25 !important; }
+    }
+  </style>
+  <script>(function(){ if (localStorage.getItem('theme') === 'dark') document.documentElement.classList.add('dark'); })();</script>
+</head>
+<body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-white h-screen overflow-hidden transition-colors duration-300">
+
+  <div class="bg-decor fixed inset-0 overflow-hidden pointer-events-none">
+    <div class="absolute -top-40 -left-40 w-96 h-96 bg-cyan-400/20 dark:bg-cyan-600/25 rounded-full blur-3xl"></div>
+    <div class="absolute -bottom-40 -right-40 w-96 h-96 bg-sky-400/20 dark:bg-sky-600/20 rounded-full blur-3xl"></div>
+  </div>
+
+  <div class="no-print relative flex items-center justify-between px-6 py-3 border-b border-slate-200 dark:border-slate-800">
+    <a href="index.html" class="text-slate-500 dark:text-slate-400 hover:text-cyan-600 dark:hover:text-white text-sm font-semibold">← Inicio</a>
+    <span class="hidden sm:block text-cyan-600 dark:text-cyan-400 text-xs md:text-sm font-bold tracking-wider text-center">📟 ¿QUÉ ES ROUTEROS?</span>
+    <div class="flex items-center gap-2">
+      <button onclick="downloadPDF()" class="px-3 py-1.5 rounded-lg bg-cyan-500 hover:bg-cyan-400 text-white text-sm font-semibold transition">📄 PDF</button>
+      <button onclick="toggleTheme()" class="w-9 h-9 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center justify-center"><span class="theme-icon">🌙</span></button>
+      <span id="counter" class="text-slate-500 dark:text-slate-400 text-sm font-mono w-12 text-right">1/12</span>
+    </div>
+  </div>
+
+  <main class="relative h-[calc(100vh-112px)]">
+
+    <!-- 1 -->
+    <section class="slide active h-full flex-col items-center justify-center text-center px-8">
+      <span class="text-cyan-600 dark:text-cyan-400 font-bold tracking-widest mb-4">DEFINICIÓN</span>
+      <h1 class="text-5xl md:text-7xl font-black max-w-4xl leading-tight bg-gradient-to-r from-cyan-500 to-sky-500 dark:from-cyan-300 dark:to-sky-300 bg-clip-text text-transparent pb-2">¿Qué es RouterOS?</h1>
+      <p class="mt-5 text-lg text-slate-500">El sistema operativo de red de MikroTik · basado en Linux</p>
+      <p class="mt-6 text-xl md:text-2xl text-slate-600 dark:text-slate-300 max-w-3xl">Es un <span class="text-cyan-600 dark:text-cyan-300 font-semibold">sistema operativo basado en Linux</span> que convierte un hardware, una PC o una máquina virtual en un <b>router profesional</b> completo.</p>
+    </section>
+
+    <!-- 2 idea central -->
+    <section class="slide h-full flex-col items-center justify-center px-8 text-center">
+      <h2 class="text-4xl md:text-5xl font-black mb-6">La idea central</h2>
+      <p class="text-slate-600 dark:text-slate-300 max-w-2xl mb-10">Un <b>solo sistema operativo</b> que integra todas las funciones de red que normalmente necesitarían varios equipos separados.</p>
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-4xl w-full">
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><h3 class="font-bold text-cyan-600 dark:text-cyan-300">🧭 Routing</h3></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><h3 class="font-bold text-cyan-600 dark:text-cyan-300">🔥 Firewall y NAT</h3></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><h3 class="font-bold text-cyan-600 dark:text-cyan-300">🔐 VPN</h3></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><h3 class="font-bold text-cyan-600 dark:text-cyan-300">📊 QoS</h3></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><h3 class="font-bold text-cyan-600 dark:text-cyan-300">📡 DHCP y DNS</h3></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><h3 class="font-bold text-cyan-600 dark:text-cyan-300">📶 Hotspot y Wireless</h3></div>
+      </div>
+    </section>
+
+    <!-- 3 sobre qué corre -->
+    <section class="slide h-full flex-col items-center justify-center px-8">
+      <h2 class="text-4xl md:text-5xl font-black mb-10 text-center">¿Sobre qué corre RouterOS?</h2>
+      <div class="space-y-4 max-w-3xl w-full">
+        <div class="flex items-start gap-4 rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><span class="flex-shrink-0 w-9 h-9 rounded-full bg-cyan-500 text-white font-black flex items-center justify-center">1</span><p class="text-slate-600 dark:text-slate-300"><b>RouterBOARD</b> — el hardware fabricado por MikroTik que ya trae RouterOS instalado.</p></div>
+        <div class="flex items-start gap-4 rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><span class="flex-shrink-0 w-9 h-9 rounded-full bg-cyan-500 text-white font-black flex items-center justify-center">2</span><p class="text-slate-600 dark:text-slate-300"><b>x86 / PC</b> — puedes instalarlo en una computadora común con arquitectura estándar.</p></div>
+        <div class="flex items-start gap-4 rounded-xl bg-cyan-500/10 border border-cyan-400/40 p-5"><span class="flex-shrink-0 w-9 h-9 rounded-full bg-cyan-500 text-white font-black flex items-center justify-center">3</span><p class="text-slate-700 dark:text-slate-200"><b>CHR (Cloud Hosted Router)</b> — versión para máquinas virtuales y entornos en la nube.</p></div>
+      </div>
+    </section>
+
+    <!-- 4 funciones principales -->
+    <section class="slide h-full flex-col items-center justify-center px-8">
+      <h2 class="text-4xl md:text-5xl font-black mb-10 text-center">Funciones principales</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-4xl w-full">
+        <div class="flex items-center gap-4 rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><span class="text-2xl">🧭</span><div><h3 class="font-bold text-cyan-600 dark:text-cyan-300">Enrutamiento</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Estático y dinámico (OSPF, BGP).</p></div></div>
+        <div class="flex items-center gap-4 rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><span class="text-2xl">🔥</span><div><h3 class="font-bold text-cyan-600 dark:text-cyan-300">Firewall y NAT</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Filtrado de tráfico y traducción de direcciones.</p></div></div>
+        <div class="flex items-center gap-4 rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><span class="text-2xl">🔐</span><div><h3 class="font-bold text-cyan-600 dark:text-cyan-300">VPN</h3><p class="text-slate-500 dark:text-slate-400 text-sm">IPsec, OpenVPN y WireGuard (en v7).</p></div></div>
+        <div class="flex items-center gap-4 rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><span class="text-2xl">📊</span><div><h3 class="font-bold text-cyan-600 dark:text-cyan-300">QoS / Colas</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Control y reparto del ancho de banda.</p></div></div>
+        <div class="flex items-center gap-4 rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><span class="text-2xl">🌐</span><div><h3 class="font-bold text-cyan-600 dark:text-cyan-300">PPPoE / Hotspot</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Servidor de acceso y portal para clientes.</p></div></div>
+        <div class="flex items-center gap-4 rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><span class="text-2xl">📡</span><div><h3 class="font-bold text-cyan-600 dark:text-cyan-300">DHCP y DNS</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Asignación de IPs y resolución de nombres.</p></div></div>
+      </div>
+    </section>
+
+    <!-- 5 formas de administrarlo -->
+    <section class="slide h-full flex-col items-center justify-center px-8">
+      <h2 class="text-4xl md:text-5xl font-black mb-10 text-center">Formas de administrarlo</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-4xl w-full">
+        <div class="flex items-center gap-4 rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><span class="font-mono font-black text-cyan-500 w-24">WinBox</span><p class="text-slate-600 dark:text-slate-300 text-sm">Aplicación gráfica de escritorio.</p></div>
+        <div class="flex items-center gap-4 rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><span class="font-mono font-black text-cyan-500 w-24">WebFig</span><p class="text-slate-600 dark:text-slate-300 text-sm">Administración desde el navegador.</p></div>
+        <div class="flex items-center gap-4 rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><span class="font-mono font-black text-cyan-500 w-24">CLI</span><p class="text-slate-600 dark:text-slate-300 text-sm">Línea de comandos por SSH / Telnet.</p></div>
+        <div class="flex items-center gap-4 rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><span class="font-mono font-black text-cyan-500 w-24">API</span><p class="text-slate-600 dark:text-slate-300 text-sm">Automatización e integración externa.</p></div>
+        <div class="flex items-center gap-4 rounded-xl bg-cyan-500/10 border border-cyan-400/40 p-5 md:col-span-2"><span class="font-mono font-black text-cyan-500 w-24">App móvil</span><p class="text-slate-600 dark:text-slate-300 text-sm">La aplicación MikroTik para gestionar desde el celular.</p></div>
+      </div>
+    </section>
+
+    <!-- 6 versiones -->
+    <section class="slide h-full flex-col items-center justify-center px-8 text-center">
+      <h2 class="text-4xl md:text-5xl font-black mb-6">Versiones: v6 vs v7</h2>
+      <p class="text-slate-600 dark:text-slate-300 max-w-2xl mb-8">RouterOS evolucionó de la versión 6 a la 7, con mejoras importantes en rendimiento y nuevas funciones.</p>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-4xl w-full">
+        <div class="rounded-2xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-7 text-left"><h3 class="font-bold text-cyan-600 dark:text-cyan-300 mb-2">RouterOS v6</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Versión clásica, muy estable y todavía usada en muchos equipos en producción.</p></div>
+        <div class="rounded-2xl bg-cyan-500/10 border border-cyan-400/40 p-7 text-left"><h3 class="font-bold text-cyan-600 dark:text-cyan-300 mb-2">RouterOS v7</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Añade <b>WireGuard</b>, contenedores, mejor <b>BGP/OSPF</b> y almacenamiento <b>ROSE</b>.</p></div>
+      </div>
+      <p class="mt-8 text-slate-500 dark:text-slate-400">Recomendación: <b>actualizar siempre</b> a la última versión estable.</p>
+    </section>
+
+    <!-- 7 licencias -->
+    <section class="slide h-full flex-col items-center justify-center px-8">
+      <span class="text-cyan-600 dark:text-cyan-400 font-bold tracking-widest mb-3 text-center block">CONTENIDO ADICIONAL</span>
+      <h2 class="text-4xl md:text-5xl font-black mb-8 text-center">Licencias de RouterOS</h2>
+      <div class="space-y-4 max-w-3xl w-full">
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><p class="font-semibold text-cyan-600 dark:text-cyan-300">🔢 Niveles de 0 a 6</p><p class="text-slate-500 dark:text-slate-400 text-sm mt-1">Cada nivel define los límites del sistema: a mayor nivel, más capacidades.</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><p class="font-semibold text-cyan-600 dark:text-cyan-300">🚧 Qué limita el nivel</p><p class="text-slate-500 dark:text-slate-400 text-sm mt-1">Por ejemplo el número de túneles activos, interfaces o sesiones permitidas.</p></div>
+        <div class="rounded-xl bg-cyan-500/10 border border-cyan-400/40 p-5"><p class="font-semibold text-cyan-600 dark:text-cyan-300">☁️ CHR (Cloud Hosted Router)</p><p class="text-slate-500 dark:text-slate-400 text-sm mt-1">Tiene su propio esquema de licencia, basado en la <b>velocidad</b> de las interfaces.</p></div>
+      </div>
+    </section>
+
+    <!-- 8 ronda 1 -->
+    <section class="slide h-full flex-col items-center justify-center px-8">
+      <div class="text-5xl mb-4">🙋</div>
+      <h2 class="text-4xl md:text-5xl font-black mb-8 text-center text-cyan-600 dark:text-cyan-300">Ronda de preguntas · 1</h2>
+      <div class="space-y-4 max-w-3xl w-full">
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><p class="font-semibold">1. ¿Sobre qué sistema se basa RouterOS?</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><p class="font-semibold">2. ¿Qué hardware ejecuta RouterOS?</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><p class="font-semibold">3. Nombra 3 funciones de RouterOS.</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><p class="font-semibold">4. ¿Con qué herramienta gráfica se administra?</p></div>
+      </div>
+    </section>
+
+    <!-- 9 casos de uso -->
+    <section class="slide h-full flex-col items-center justify-center px-8">
+      <h2 class="text-4xl md:text-5xl font-black mb-8 text-center">Casos de uso en un ISP / WISP</h2>
+      <div class="space-y-4 max-w-3xl w-full">
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><p class="font-semibold text-cyan-600 dark:text-cyan-300">🚪 Gateway de borde</p><p class="text-slate-500 dark:text-slate-400 text-sm mt-1">Punto de salida principal de la red hacia internet.</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><p class="font-semibold text-cyan-600 dark:text-cyan-300">🔌 Servidor PPPoE</p><p class="text-slate-500 dark:text-slate-400 text-sm mt-1">Autenticación y conexión de los clientes del proveedor.</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><p class="font-semibold text-cyan-600 dark:text-cyan-300">📊 Control de ancho de banda</p><p class="text-slate-500 dark:text-slate-400 text-sm mt-1">Limita y reparte la velocidad según el plan contratado.</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><p class="font-semibold text-cyan-600 dark:text-cyan-300">🔥 Firewall</p><p class="text-slate-500 dark:text-slate-400 text-sm mt-1">Protege la red y bloquea tráfico no deseado.</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><p class="font-semibold text-cyan-600 dark:text-cyan-300">📶 Hotspot de clientes</p><p class="text-slate-500 dark:text-slate-400 text-sm mt-1">Portal de acceso para usuarios con login y control.</p></div>
+      </div>
+    </section>
+
+    <!-- 10 ventajas y límites -->
+    <section class="slide h-full flex-col items-center justify-center px-8">
+      <h2 class="text-4xl md:text-5xl font-black mb-8 text-center">Ventajas y límites</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-4xl w-full">
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-6"><h3 class="font-bold text-cyan-600 dark:text-cyan-300 mb-1">💪 Muy potente</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Integra funciones de routers profesionales de alto costo.</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-6"><h3 class="font-bold text-cyan-600 dark:text-cyan-300 mb-1">💲 Económico</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Ofrece gran relación precio/rendimiento.</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-6"><h3 class="font-bold text-cyan-600 dark:text-cyan-300 mb-1">📚 Requiere conocimiento</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Su configuración avanzada exige aprendizaje y práctica.</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-6"><h3 class="font-bold text-cyan-600 dark:text-cyan-300 mb-1">🖥️ Depende del hardware</h3><p class="text-slate-500 dark:text-slate-400 text-sm">El rendimiento depende de la CPU/RAM bajo mucho tráfico.</p></div>
+      </div>
+    </section>
+
+    <!-- 11 ronda 2 -->
+    <section class="slide h-full flex-col items-center justify-center px-8">
+      <div class="text-5xl mb-4">🧠</div>
+      <h2 class="text-4xl md:text-5xl font-black mb-8 text-center text-cyan-600 dark:text-cyan-300">Ronda de preguntas · 2</h2>
+      <div class="space-y-4 max-w-3xl w-full">
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><p class="font-semibold">5. ¿Cuál es la diferencia entre v6 y v7?</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><p class="font-semibold">6. ¿Qué es CHR?</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><p class="font-semibold">7. ¿Para qué sirven los niveles de licencia?</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><p class="font-semibold">8. Nombra 2 formas de administrar RouterOS.</p></div>
+      </div>
+    </section>
+
+    <!-- 12 resumen -->
+    <section class="slide h-full flex-col items-center justify-center px-8 text-center">
+      <div class="text-5xl mb-4">✅</div>
+      <h2 class="text-4xl md:text-5xl font-black mb-8">Resumen del tema</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-3xl w-full text-left">
+        <div class="rounded-xl bg-cyan-500/10 border border-cyan-400/30 p-5">RouterOS es el <b>SO de red de MikroTik</b> basado en Linux.</div>
+        <div class="rounded-xl bg-cyan-500/10 border border-cyan-400/30 p-5">Integra <b>routing, firewall, NAT, VPN, QoS, DHCP, DNS</b> y más.</div>
+        <div class="rounded-xl bg-cyan-500/10 border border-cyan-400/30 p-5">Corre en <b>RouterBOARD, x86 y CHR</b> (nube / VM).</div>
+        <div class="rounded-xl bg-cyan-500/10 border border-cyan-400/30 p-5">Se administra con <b>WinBox, WebFig, CLI y API</b>.</div>
+      </div>
+      <p class="mt-8 text-slate-500">Siguiente tema: ¿Qué es MikroTik? 🛰️</p>
+    </section>
+
+  </main>
+
+  <div class="no-print relative flex items-center justify-between px-6 py-3 border-t border-slate-200 dark:border-slate-800">
+    <button onclick="prev()" class="px-5 py-2 rounded-lg bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 font-semibold transition">← Anterior</button>
+    <div id="dots" class="hidden md:flex gap-2"></div>
+    <button onclick="next()" class="px-5 py-2 rounded-lg bg-cyan-500 hover:bg-cyan-400 text-white font-bold transition">Siguiente →</button>
+  </div>
+
+  <script>
+    const slides = document.querySelectorAll('.slide');
+    let cur = 0;
+    const dots = document.getElementById('dots');
+    slides.forEach((_, i) => { const d=document.createElement('button'); d.onclick=()=>go(i); dots.appendChild(d); });
+    function render(){
+      slides.forEach((s,i)=>s.classList.toggle('active', i===cur));
+      document.getElementById('counter').textContent = `${cur+1}/${slides.length}`;
+      [...dots.children].forEach((d,i)=>d.className=`h-2.5 rounded-full transition ${i===cur?'bg-cyan-500 w-6':'bg-slate-300 dark:bg-slate-600 w-2.5'}`);
+    }
+    function go(i){ cur=Math.max(0,Math.min(slides.length-1,i)); render(); }
+    function next(){ go(cur+1); } function prev(){ go(cur-1); }
+    function downloadPDF(){ window.print(); }
+    function toggleTheme(){ const el=document.documentElement; el.classList.toggle('dark'); localStorage.setItem('theme', el.classList.contains('dark')?'dark':'light'); updateThemeUI(); }
+    function updateThemeUI(){ const dark=document.documentElement.classList.contains('dark'); document.querySelectorAll('.theme-icon').forEach(e=>e.textContent=dark?'☀️':'🌙'); }
+    document.addEventListener('keydown',e=>{ if(e.key==='ArrowRight')next(); if(e.key==='ArrowLeft')prev(); });
+    updateThemeUI(); render();
+  </script>
+</body>
+</html>

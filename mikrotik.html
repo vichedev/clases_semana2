@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>¿Qué es MikroTik?</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800;900&display=swap" rel="stylesheet">
+  <style type="text/tailwindcss">@custom-variant dark (&:where(.dark, .dark *));</style>
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .slide { display:none; } .slide.active { display:flex; }
+    @media print {
+      @page { margin: 0; }
+      .no-print { display:none !important; }
+      html, body { height:auto !important; overflow:visible !important; background:#fff !important; }
+      main { height:auto !important; } .bg-decor { display:none !important; }
+      .slide { display:flex !important; page-break-after:always; height:96vh; padding-top:78px !important; position:relative; }
+      .slide::before {
+        content: "🛰️ ¿QUÉ ES MIKROTIK?";
+        position:absolute; top:0; left:0; right:0;
+        padding:18px 24px; text-align:center;
+        font-size:17px; font-weight:800; letter-spacing:0.04em; color:#4f46e5;
+        background:#ffffff; border-bottom:2px solid #e2e8f0;
+      }
+      .slide h1 { color:#4f46e5 !important; -webkit-text-fill-color:#4f46e5 !important; background:none !important; }
+    }
+    .slide .font-mono { word-break: break-word; }
+    @media screen and (max-width: 767px) {
+      .slide { justify-content: flex-start !important; padding: 1.25rem !important; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+      .slide h1 { font-size: 2.1rem !important; line-height: 1.15 !important; }
+      .slide h2 { font-size: 1.55rem !important; line-height: 1.25 !important; }
+    }
+  </style>
+  <script>(function(){ if (localStorage.getItem('theme') === 'dark') document.documentElement.classList.add('dark'); })();</script>
+</head>
+<body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-white h-screen overflow-hidden transition-colors duration-300">
+
+  <div class="bg-decor fixed inset-0 overflow-hidden pointer-events-none">
+    <div class="absolute -top-40 -left-40 w-96 h-96 bg-indigo-400/20 dark:bg-indigo-600/25 rounded-full blur-3xl"></div>
+    <div class="absolute -bottom-40 -right-40 w-96 h-96 bg-violet-400/20 dark:bg-violet-600/20 rounded-full blur-3xl"></div>
+  </div>
+
+  <div class="no-print relative flex items-center justify-between px-6 py-3 border-b border-slate-200 dark:border-slate-800">
+    <a href="index.html" class="text-slate-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-white text-sm font-semibold">← Inicio</a>
+    <span class="hidden sm:block text-indigo-600 dark:text-indigo-400 text-xs md:text-sm font-bold tracking-wider text-center">🛰️ ¿QUÉ ES MIKROTIK?</span>
+    <div class="flex items-center gap-2">
+      <button onclick="downloadPDF()" class="px-3 py-1.5 rounded-lg bg-indigo-500 hover:bg-indigo-400 text-white text-sm font-semibold transition">📄 PDF</button>
+      <button onclick="toggleTheme()" class="w-9 h-9 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center justify-center"><span class="theme-icon">🌙</span></button>
+      <span id="counter" class="text-slate-500 dark:text-slate-400 text-sm font-mono w-12 text-right">1/12</span>
+    </div>
+  </div>
+
+  <main class="relative h-[calc(100vh-112px)]">
+
+    <!-- 1 -->
+    <section class="slide active h-full flex-col items-center justify-center text-center px-8">
+      <span class="text-indigo-600 dark:text-indigo-400 font-bold tracking-widest mb-4">DEFINICIÓN</span>
+      <h1 class="text-5xl md:text-7xl font-black max-w-4xl leading-tight bg-gradient-to-r from-indigo-500 to-violet-500 dark:from-indigo-300 dark:to-violet-300 bg-clip-text text-transparent pb-2">¿Qué es MikroTik?</h1>
+      <p class="mt-5 text-lg text-slate-500">Empresa de tecnología de redes · Letonia · 1996</p>
+      <p class="mt-6 text-xl md:text-2xl text-slate-600 dark:text-slate-300 max-w-3xl">Es una <span class="text-indigo-600 dark:text-indigo-300 font-semibold">empresa letona de redes</span> con sede en Riga: fabrica equipos de red y desarrolla el sistema operativo <b>RouterOS</b> que los hace funcionar.</p>
+    </section>
+
+    <!-- 2 dos cosas en una -->
+    <section class="slide h-full flex-col items-center justify-center px-8 text-center">
+      <h2 class="text-4xl md:text-5xl font-black mb-12">Dos cosas en una</h2>
+      <div class="flex flex-col md:flex-row items-center justify-center gap-6 max-w-4xl">
+        <div class="rounded-2xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 px-8 py-6"><p class="text-slate-500 text-sm mb-2">El hardware:</p><p class="text-2xl font-bold text-indigo-600 dark:text-indigo-300">Routers · Switches · Antenas</p></div>
+        <div class="text-4xl text-indigo-500">➜ + ➜</div>
+        <div class="rounded-2xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 px-8 py-6"><p class="text-slate-500 text-sm mb-2">El software:</p><p class="text-2xl font-bold text-cyan-600 dark:text-cyan-300 font-mono">RouterOS</p></div>
+      </div>
+      <p class="mt-12 text-slate-500 dark:text-slate-400 max-w-2xl">El equipo físico no sirve sin el sistema que lo controla: ambos forman MikroTik.</p>
+    </section>
+
+    <!-- 3 RouterBOARD -->
+    <section class="slide h-full flex-col items-center justify-center px-8">
+      <h2 class="text-4xl md:text-5xl font-black mb-10 text-center">RouterBOARD: la línea de hardware</h2>
+      <div class="space-y-4 max-w-3xl w-full">
+        <div class="flex items-start gap-4 rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><span class="flex-shrink-0 w-9 h-9 rounded-full bg-indigo-500 text-white font-black flex items-center justify-center">1</span><p class="text-slate-600 dark:text-slate-300">Es la <b>familia de placas y equipos</b> de red que fabrica MikroTik.</p></div>
+        <div class="flex items-start gap-4 rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><span class="flex-shrink-0 w-9 h-9 rounded-full bg-indigo-500 text-white font-black flex items-center justify-center">2</span><p class="text-slate-600 dark:text-slate-300">Ofrece <b>mucha potencia a bajo costo</b> comparado con marcas tradicionales.</p></div>
+        <div class="flex items-start gap-4 rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><span class="flex-shrink-0 w-9 h-9 rounded-full bg-indigo-500 text-white font-black flex items-center justify-center">3</span><p class="text-slate-600 dark:text-slate-300">Todos los equipos vienen con <b>RouterOS preinstalado</b>.</p></div>
+        <div class="flex items-start gap-4 rounded-xl bg-indigo-500/10 border border-indigo-400/40 p-5"><span class="flex-shrink-0 w-9 h-9 rounded-full bg-indigo-500 text-white font-black flex items-center justify-center">4</span><p class="text-slate-700 dark:text-slate-200">Muy popular entre <b>ISP y WISP de Latinoamérica</b> por su precio y flexibilidad.</p></div>
+      </div>
+    </section>
+
+    <!-- 4 líneas de producto -->
+    <section class="slide h-full flex-col items-center justify-center px-8">
+      <h2 class="text-4xl md:text-5xl font-black mb-10 text-center">Líneas de producto</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-4xl w-full">
+        <div class="flex items-center gap-4 rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><span class="font-mono font-black text-indigo-500 w-24">hAP</span><p class="text-slate-600 dark:text-slate-300 text-sm">Routers para hogar y oficina.</p></div>
+        <div class="flex items-center gap-4 rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><span class="font-mono font-black text-indigo-500 w-24">CCR</span><p class="text-slate-600 dark:text-slate-300 text-sm">Cloud Core Router: alto rendimiento.</p></div>
+        <div class="flex items-center gap-4 rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><span class="font-mono font-black text-indigo-500 w-24">CRS</span><p class="text-slate-600 dark:text-slate-300 text-sm">Switches gestionables.</p></div>
+        <div class="flex items-center gap-4 rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><span class="font-mono font-black text-indigo-500 w-24">SXT/LHG</span><p class="text-slate-600 dark:text-slate-300 text-sm">Antenas inalámbricas (Wireless Wire).</p></div>
+        <div class="flex items-center gap-4 rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><span class="font-mono font-black text-indigo-500 w-24">hEX</span><p class="text-slate-600 dark:text-slate-300 text-sm">Router compacto y económico.</p></div>
+        <div class="flex items-center gap-4 rounded-xl bg-indigo-500/10 border border-indigo-400/40 p-5"><span class="font-mono font-black text-indigo-500 w-24">+</span><p class="text-slate-700 dark:text-slate-200 text-sm">Catálogo amplio para cada necesidad.</p></div>
+      </div>
+    </section>
+
+    <!-- 5 RouterOS vs SwitchOS -->
+    <section class="slide h-full flex-col items-center justify-center px-8">
+      <h2 class="text-4xl md:text-5xl font-black mb-6 text-center">RouterOS vs SwitchOS</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-4xl w-full">
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-6"><h3 class="font-bold text-indigo-600 dark:text-indigo-300 mb-1">🧠 RouterOS</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Sistema completo para <b>enrutamiento, firewall, VPN, PPPoE</b> y gestión avanzada de red.</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-6"><h3 class="font-bold text-indigo-600 dark:text-indigo-300 mb-1">🔀 SwitchOS</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Sistema ligero enfocado en <b>switching puro</b>: gestión simple de puertos y VLANs.</p></div>
+      </div>
+      <p class="mt-8 text-slate-500 dark:text-slate-400 max-w-2xl text-center">Algunos equipos <b>CRS</b> pueden funcionar con cualquiera de los dos sistemas, según lo que necesites.</p>
+    </section>
+
+    <!-- 6 por qué es tan usado -->
+    <section class="slide h-full flex-col items-center justify-center px-8 text-center">
+      <h2 class="text-4xl md:text-5xl font-black mb-6">¿Por qué es tan usado?</h2>
+      <p class="text-slate-600 dark:text-slate-300 max-w-2xl mb-8">MikroTik combina <b>precio bajo</b> con <b>muchas funciones</b> en un solo equipo y una comunidad muy activa.</p>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5 max-w-4xl w-full">
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-6"><div class="text-3xl mb-2">💰</div><h3 class="font-bold text-indigo-600 dark:text-indigo-300">Calidad/precio</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Mucho rendimiento por poco dinero.</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-6"><div class="text-3xl mb-2">🧰</div><h3 class="font-bold text-indigo-600 dark:text-indigo-300">Todo en uno</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Routing, firewall, VPN, hotspot…</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-6"><div class="text-3xl mb-2">🎓</div><h3 class="font-bold text-indigo-600 dark:text-indigo-300">Comunidad</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Docs y certificaciones (MTCNA…).</p></div>
+      </div>
+    </section>
+
+    <!-- 7 ecosistema -->
+    <section class="slide h-full flex-col items-center justify-center px-8">
+      <span class="text-indigo-600 dark:text-indigo-400 font-bold tracking-widest mb-3 text-center block">CONTENIDO ADICIONAL</span>
+      <h2 class="text-4xl md:text-5xl font-black mb-8 text-center">El ecosistema MikroTik</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl w-full">
+        <div class="rounded-2xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-7 text-center"><h3 class="font-bold text-indigo-600 dark:text-indigo-300 mb-2">WinBox</h3><p class="font-mono text-lg">Administrar</p><p class="text-slate-500 dark:text-slate-400 text-sm mt-2">Herramienta gráfica de configuración.</p></div>
+        <div class="rounded-2xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-7 text-center"><h3 class="font-bold text-indigo-600 dark:text-indigo-300 mb-2">The Dude</h3><p class="font-mono text-lg">Monitoreo</p><p class="text-slate-500 dark:text-slate-400 text-sm mt-2">Mapea y vigila toda la red.</p></div>
+        <div class="rounded-2xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-7 text-center"><h3 class="font-bold text-indigo-600 dark:text-indigo-300 mb-2">Academia</h3><p class="font-mono text-lg">MTCNA…</p><p class="text-slate-500 dark:text-slate-400 text-sm mt-2">Foros y certificaciones oficiales.</p></div>
+      </div>
+    </section>
+
+    <!-- 8 ronda 1 -->
+    <section class="slide h-full flex-col items-center justify-center px-8">
+      <div class="text-5xl mb-4">🙋</div>
+      <h2 class="text-4xl md:text-5xl font-black mb-8 text-center text-indigo-600 dark:text-indigo-300">Ronda de preguntas · 1</h2>
+      <div class="space-y-4 max-w-3xl w-full">
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><p class="font-semibold">1. ¿De qué país es MikroTik?</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><p class="font-semibold">2. ¿Qué dos cosas fabrica/desarrolla?</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><p class="font-semibold">3. ¿Qué es RouterBOARD?</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><p class="font-semibold">4. Nombra una línea de producto.</p></div>
+      </div>
+    </section>
+
+    <!-- 9 MikroTik en un ISP -->
+    <section class="slide h-full flex-col items-center justify-center px-8">
+      <h2 class="text-4xl md:text-5xl font-black mb-8 text-center">MikroTik en un ISP</h2>
+      <div class="space-y-4 max-w-3xl w-full">
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><p class="font-semibold text-indigo-600 dark:text-indigo-300">🚪 Gateway y PPPoE</p><p class="text-slate-500 dark:text-slate-400 text-sm mt-1">Es la puerta de salida a internet y autentica a los clientes con PPPoE.</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><p class="font-semibold text-indigo-600 dark:text-indigo-300">📡 Enlaces inalámbricos</p><p class="text-slate-500 dark:text-slate-400 text-sm mt-1">Conexiones punto a punto para llevar la señal a zonas alejadas.</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><p class="font-semibold text-indigo-600 dark:text-indigo-300">🌐 Distribución y control</p><p class="text-slate-500 dark:text-slate-400 text-sm mt-1">Reparte el ancho de banda y controla a cada cliente (planes, cortes, límites).</p></div>
+      </div>
+    </section>
+
+    <!-- 10 consideraciones -->
+    <section class="slide h-full flex-col items-center justify-center px-8">
+      <h2 class="text-4xl md:text-5xl font-black mb-8 text-center">Consideraciones</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-4xl w-full">
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-6"><h3 class="font-bold text-indigo-600 dark:text-indigo-300 mb-1">📚 Curva de aprendizaje</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Hay que saber configurarlo: ofrece muchas opciones y requiere conocimiento.</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-6"><h3 class="font-bold text-indigo-600 dark:text-indigo-300 mb-1">🎯 Elegir el modelo correcto</h3><p class="text-slate-500 dark:text-slate-400 text-sm">El equipo adecuado depende del tráfico esperado.</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-6"><h3 class="font-bold text-indigo-600 dark:text-indigo-300 mb-1">⚙️ CPU y puertos</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Más clientes y servicios exigen más procesador y más puertos.</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-6"><h3 class="font-bold text-indigo-600 dark:text-indigo-300 mb-1">📈 Throughput</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Verifica la capacidad real de tráfico antes de comprar.</p></div>
+      </div>
+    </section>
+
+    <!-- 11 ronda 2 -->
+    <section class="slide h-full flex-col items-center justify-center px-8">
+      <div class="text-5xl mb-4">🧠</div>
+      <h2 class="text-4xl md:text-5xl font-black mb-8 text-center text-indigo-600 dark:text-indigo-300">Ronda de preguntas · 2</h2>
+      <div class="space-y-4 max-w-3xl w-full">
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><p class="font-semibold">5. ¿Diferencia entre RouterOS y SwitchOS?</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><p class="font-semibold">6. ¿Qué es un CCR?</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><p class="font-semibold">7. ¿Por qué es popular entre los WISP?</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><p class="font-semibold">8. ¿Qué certificación básica existe?</p></div>
+      </div>
+    </section>
+
+    <!-- 12 resumen -->
+    <section class="slide h-full flex-col items-center justify-center px-8 text-center">
+      <div class="text-5xl mb-4">✅</div>
+      <h2 class="text-4xl md:text-5xl font-black mb-8">Resumen del tema</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-3xl w-full text-left">
+        <div class="rounded-xl bg-indigo-500/10 border border-indigo-400/30 p-5">MikroTik es una <b>empresa letona</b> de redes (1996, Riga).</div>
+        <div class="rounded-xl bg-indigo-500/10 border border-indigo-400/30 p-5">Fabrica <b>hardware</b> (RouterBOARD) y desarrolla <b>RouterOS</b>.</div>
+        <div class="rounded-xl bg-indigo-500/10 border border-indigo-400/30 p-5">Líneas: <b>hAP, CCR, CRS, hEX</b> y antenas inalámbricas.</div>
+        <div class="rounded-xl bg-indigo-500/10 border border-indigo-400/30 p-5">Muy usado por <b>ISP/WISP</b> por su precio y funciones.</div>
+      </div>
+      <p class="mt-8 text-slate-500">Siguiente tema: ¿Es recomendable hacer NAT en MikroTik? 🔁</p>
+    </section>
+
+  </main>
+
+  <div class="no-print relative flex items-center justify-between px-6 py-3 border-t border-slate-200 dark:border-slate-800">
+    <button onclick="prev()" class="px-5 py-2 rounded-lg bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 font-semibold transition">← Anterior</button>
+    <div id="dots" class="hidden md:flex gap-2"></div>
+    <button onclick="next()" class="px-5 py-2 rounded-lg bg-indigo-500 hover:bg-indigo-400 text-white font-bold transition">Siguiente →</button>
+  </div>
+
+  <script>
+    const slides = document.querySelectorAll('.slide');
+    let cur = 0;
+    const dots = document.getElementById('dots');
+    slides.forEach((_, i) => { const d=document.createElement('button'); d.onclick=()=>go(i); dots.appendChild(d); });
+    function render(){
+      slides.forEach((s,i)=>s.classList.toggle('active', i===cur));
+      document.getElementById('counter').textContent = `${cur+1}/${slides.length}`;
+      [...dots.children].forEach((d,i)=>d.className=`h-2.5 rounded-full transition ${i===cur?'bg-indigo-500 w-6':'bg-slate-300 dark:bg-slate-600 w-2.5'}`);
+    }
+    function go(i){ cur=Math.max(0,Math.min(slides.length-1,i)); render(); }
+    function next(){ go(cur+1); } function prev(){ go(cur-1); }
+    function downloadPDF(){ window.print(); }
+    function toggleTheme(){ const el=document.documentElement; el.classList.toggle('dark'); localStorage.setItem('theme', el.classList.contains('dark')?'dark':'light'); updateThemeUI(); }
+    function updateThemeUI(){ const dark=document.documentElement.classList.contains('dark'); document.querySelectorAll('.theme-icon').forEach(e=>e.textContent=dark?'☀️':'🌙'); }
+    document.addEventListener('keydown',e=>{ if(e.key==='ArrowRight')next(); if(e.key==='ArrowLeft')prev(); });
+    updateThemeUI(); render();
+  </script>
+</body>
+</html>
