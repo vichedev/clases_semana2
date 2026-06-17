@@ -57,7 +57,7 @@
     <section class="slide active h-full flex-col items-center justify-center text-center px-8">
       <span class="text-indigo-600 dark:text-indigo-400 font-bold tracking-widest mb-4">DEFINICIÓN</span>
       <h1 class="text-5xl md:text-7xl font-black max-w-4xl leading-tight bg-gradient-to-r from-indigo-500 to-violet-500 dark:from-indigo-300 dark:to-violet-300 bg-clip-text text-transparent pb-2">¿Qué es MikroTik?</h1>
-      <p class="mt-5 text-lg text-slate-500">Empresa de tecnología de redes · Letonia · 1996</p>
+      <p class="mt-5 text-lg text-slate-500">Empresa de tecnología de redes · <button onclick="openGeo()" class="text-indigo-600 dark:text-indigo-300 font-semibold underline decoration-dotted underline-offset-4 hover:text-indigo-500 transition cursor-pointer">Letonia 📍</button> · 1996</p>
       <p class="mt-6 text-xl md:text-2xl text-slate-600 dark:text-slate-300 max-w-3xl">Es una <span class="text-indigo-600 dark:text-indigo-300 font-semibold">empresa letona de redes</span> con sede en Riga: fabrica equipos de red y desarrolla el sistema operativo <b>RouterOS</b> que los hace funcionar.</p>
     </section>
 
@@ -194,6 +194,23 @@
     <button onclick="next()" class="px-5 py-2 rounded-lg bg-indigo-500 hover:bg-indigo-400 text-white font-bold transition">Siguiente →</button>
   </div>
 
+  <!-- Modal: ubicación de la empresa -->
+  <div id="geoModal" class="no-print fixed inset-0 z-[60] hidden items-center justify-center p-4">
+    <div onclick="closeGeo()" class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm"></div>
+    <div class="relative w-full max-w-md rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-2xl p-7">
+      <button onclick="closeGeo()" class="absolute top-3 right-4 text-slate-400 hover:text-slate-700 dark:hover:text-white text-3xl leading-none">&times;</button>
+      <div class="text-4xl mb-3">🇱🇻</div>
+      <h3 class="text-2xl font-black mb-1 text-indigo-600 dark:text-indigo-300">Letonia (Latvia)</h3>
+      <p class="text-slate-500 dark:text-slate-400 text-sm mb-4">Sede de MikroTik · Europa del Norte</p>
+      <ul class="space-y-2.5 text-sm text-slate-600 dark:text-slate-300">
+        <li>🌍 País del <b>Báltico</b>, al norte de Europa, entre Estonia y Lituania.</li>
+        <li>🏙️ Su capital es <b>Riga</b>, donde MikroTik tiene su sede desde <b>1996</b>.</li>
+        <li>🇪🇺 Miembro de la <b>Unión Europea</b> y de la OTAN; su moneda es el euro.</li>
+        <li>🗣️ Idioma oficial: letón · Población: ~1,9 millones de habitantes.</li>
+      </ul>
+    </div>
+  </div>
+
   <script>
     const slides = document.querySelectorAll('.slide');
     let cur = 0;
@@ -209,7 +226,9 @@
     function downloadPDF(){ window.print(); }
     function toggleTheme(){ const el=document.documentElement; el.classList.toggle('dark'); localStorage.setItem('theme', el.classList.contains('dark')?'dark':'light'); updateThemeUI(); }
     function updateThemeUI(){ const dark=document.documentElement.classList.contains('dark'); document.querySelectorAll('.theme-icon').forEach(e=>e.textContent=dark?'☀️':'🌙'); }
-    document.addEventListener('keydown',e=>{ if(e.key==='ArrowRight')next(); if(e.key==='ArrowLeft')prev(); });
+    function openGeo(){ const m=document.getElementById('geoModal'); m.classList.remove('hidden'); m.classList.add('flex'); }
+    function closeGeo(){ const m=document.getElementById('geoModal'); m.classList.add('hidden'); m.classList.remove('flex'); }
+    document.addEventListener('keydown',e=>{ if(e.key==='Escape'){closeGeo();return;} if(e.key==='ArrowRight')next(); if(e.key==='ArrowLeft')prev(); });
     updateThemeUI(); render();
   </script>
 </body>

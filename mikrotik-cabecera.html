@@ -65,10 +65,11 @@
     <section class="slide h-full flex-col items-center justify-center px-8 text-center">
       <h2 class="text-4xl md:text-5xl font-black mb-8">¿Qué es una cabecera?</h2>
       <p class="text-slate-600 dark:text-slate-300 max-w-3xl mb-10">Es el <b>punto donde llega el internet del proveedor mayorista</b> (upstream) y desde donde se <b>distribuye a todos los clientes</b>.</p>
+      <p class="text-slate-500 dark:text-slate-400 max-w-3xl mb-6 text-sm">Una cabecera tiene <b>dos roles clave</b>: el <b>Borde</b> (mira hacia el mayorista) y el <b>Administrador / BNG</b> (mira hacia los clientes).</p>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-4xl w-full text-left">
-        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><h3 class="font-bold text-amber-600 dark:text-amber-300 mb-1">🌐 Borde (edge)</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Frontera entre tu red y el internet del mayorista.</p></div>
+        <div class="rounded-xl bg-amber-500/10 border border-amber-400/40 p-5"><h3 class="font-bold text-amber-600 dark:text-amber-300 mb-1">🌐 Borde (edge)</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Frontera con el internet del mayorista: hace <b>BGP/peering y routing</b>. Aquí <b>NO se hace PPPoE</b>.</p></div>
+        <div class="rounded-xl bg-amber-500/10 border border-amber-400/40 p-5"><h3 class="font-bold text-amber-600 dark:text-amber-300 mb-1">🛠️ Administrador (BNG)</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Mira hacia los clientes: aquí <b>SÍ se hace el PPPoE</b>, autentica a cada usuario, le asigna IP y aplica su plan.</p></div>
         <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><h3 class="font-bold text-amber-600 dark:text-amber-300 mb-1">🔁 NAT</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Traduce las IPs privadas de los clientes a IP pública.</p></div>
-        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><h3 class="font-bold text-amber-600 dark:text-amber-300 mb-1">🔑 Autenticación</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Valida a cada cliente (ej. PPPoE) antes de darle servicio.</p></div>
         <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><h3 class="font-bold text-amber-600 dark:text-amber-300 mb-1">🎚️ Control</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Aplica ancho de banda, filtros y políticas de tráfico.</p></div>
       </div>
     </section>
@@ -122,9 +123,9 @@
       <span class="text-amber-600 dark:text-amber-400 font-bold tracking-widest mb-3 text-center block">CONTENIDO ADICIONAL</span>
       <h2 class="text-4xl md:text-5xl font-black mb-8 text-center">Al crecer: separar funciones</h2>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-4xl w-full">
-        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><h3 class="font-bold text-amber-600 dark:text-amber-300 mb-1">🔗 Router de borde</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Equipo dedicado al BGP y al peering.</p></div>
-        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><h3 class="font-bold text-amber-600 dark:text-amber-300 mb-1">👤 BNG / PPPoE</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Equipo que autentica y atiende las sesiones de clientes.</p></div>
-        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><h3 class="font-bold text-amber-600 dark:text-amber-300 mb-1">🔁 CGNAT y firewall</h3><p class="text-slate-500 dark:text-slate-400 text-sm">En equipos distintos para repartir la carga.</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><h3 class="font-bold text-amber-600 dark:text-amber-300 mb-1">🔗 Router de borde</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Mira al mayorista: <b>BGP/peering, full table, routing y firewall de borde</b>. No atiende clientes ni hace PPPoE.</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><h3 class="font-bold text-amber-600 dark:text-amber-300 mb-1">🛠️ Administrador / BNG</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Mira a los clientes: <b>servidor PPPoE, autenticación (RADIUS)</b>, asigna IP y aplica el <b>plan/ancho de banda</b> de cada usuario.</p></div>
+        <div class="rounded-xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 p-5"><h3 class="font-bold text-amber-600 dark:text-amber-300 mb-1">🔁 CGNAT y firewall</h3><p class="text-slate-500 dark:text-slate-400 text-sm">En equipos distintos para repartir la carga y aislar fallas.</p></div>
         <div class="rounded-xl bg-amber-500/10 border border-amber-400/40 p-5"><h3 class="font-bold text-amber-600 dark:text-amber-300 mb-1">🔄 Redundancia con VRRP</h3><p class="text-slate-500 dark:text-slate-400 text-sm">Un equipo de respaldo toma el control si el principal falla.</p></div>
       </div>
     </section>
